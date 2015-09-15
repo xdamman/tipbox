@@ -8,8 +8,10 @@ var server_pgp = require('../../../keys/public.key.json');
 
 var api = new TipboxApi({pgp: server_pgp});
 
-if(window.currentView == "composeView") {
-
+//
+// ComposeView Controller
+//
+var ComposeViewController = (function() {
   var $sendBtn = document.querySelector('#sendBtn');
 
   /*
@@ -57,11 +59,12 @@ if(window.currentView == "composeView") {
     tip.send();
     return false;
   });
+})();
 
-}
-
-if(window.currentView == "createView") {
-
+//
+// CreateView Controller
+//
+var CreateViewController = (function() {
   var createViewElem = document.getElementById('createView');
   var $recipient = createViewElem.querySelector('#recipient');
   var $subject = createViewElem.querySelector('#subject');
@@ -188,5 +191,4 @@ if(window.currentView == "createView") {
 
     return false;
   });
-
-}
+})();
