@@ -1,6 +1,7 @@
 # Tipbox
 
-Share a unique URL to receive anonymous tips.
+Share a unique URL to receive anonymous tips (with end-to-end PGP encryption).
+Try it at https://tipbox.is
 
 ## Main features
 - Nothing to install for the tipsters, they just need to open the unique URL generated at the creation of the Tipbox.
