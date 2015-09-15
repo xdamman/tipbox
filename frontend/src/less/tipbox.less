@@ -1,0 +1,331 @@
+@import (inline) '../lib/ratchet/css/ratchet.css';
+@import 'spinner.less';
+@import 'styles.less';
+
+a {
+  cursor: pointer;
+}
+
+a:hover {
+  color: darkblue;
+}
+
+h3, h4 {
+  margin-top: 20px;
+}
+
+[contenteditable]:focus { outline: 0px solid transparent; }
+
+code {
+  font-size: 9px;
+  font-family: Monaco, Courier;
+  color: black;
+  background: rgba(0,0,0,0.05);
+  padding: 5px 3px;
+}
+
+div[data-placeholder][data-empty]:not(:focus):before {
+    content: attr(data-placeholder);
+    float: left;
+    margin-left: 2px;
+    color: #b3b3b3;
+}
+
+#signature {
+  color: #777;
+}
+
+#pgp_fingerprint {
+  font-size: 10px;
+  position: absolute;
+  right: 2px;
+  background: rgba(255,255,255,0.85);
+  top: 8px;
+
+  span {
+    margin-left: -2px;
+  }
+
+  svg#padlock {
+    display: none;
+    width: 10px;
+    height: 10px;
+  }
+
+  &.encrypted svg#padlock {
+    display:inline-block;
+  }
+}
+
+#progressBar {
+  position: absolute;
+  top: 40px;
+  left: 0px;
+  height: 4px;
+  background-color: #428bca;
+  -webkit-transition: width 2s;
+  transition: width 0.25s;
+  width: 0%;
+}
+
+.error {
+  color: red !important;
+}
+
+#errorlog {
+  margin-bottom: 20px;
+  span {
+    font-size: 13px;
+    display: block;
+  }
+}
+
+header.bar.bar-nav {
+  z-index: 15;
+}
+
+header.error {
+  #progressBar {
+    background-color: red;
+  }
+  h1 {
+    padding-right: 30px;
+  }
+  a, h1 {
+    color: red !important;
+  }
+}
+
+html, body, form, #composeView .content .inner {
+  height: 100%;
+}
+
+#tipBody {
+  position: relative;
+  padding: 5px 10px 15px 10px;
+  height: 100%;
+  border: none;
+
+  &.encrypted {
+    font-size: 8px;
+    font-family: monospace, courier;
+    padding: 0px 5px;
+    margin-top: 5px;
+    color: red;
+    line-height: 1.5;
+  }
+}
+
+.inner {
+  max-width: 450px;
+  margin: 0 auto;
+  position: relative;
+}
+
+form {
+
+  .padded {
+    padding: 5px 15px;
+  }
+
+  .info {
+    margin-top: 5px;
+    font-size: 13px;
+  }
+
+  .input-row {
+
+    input#agreeToS {
+      width: 20px;
+    }
+
+    label {
+      font-size: 16px;
+      width: 112px;
+
+      &.tos {
+        font-size: 11px;
+        padding-top: 0px;
+      }
+    }
+
+    > span {
+      position: absolute;
+      left: 0px;
+      padding: 7px 0px 7px 112px;
+      display: inline-block;
+      color: #555;
+      font-size: 13px;
+      width: 100%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    input {
+      font-size: 13px;
+      padding-left: 112px;
+      position: absolute;
+      left: 0px;
+      width: 100%;
+    }
+
+    input[type=file] {
+      padding-top: 6px;
+      line-height: 16px;
+      font-size: 14px;
+    }
+
+    &.checkbox {
+      label {
+        width: auto;
+        padding-left: 30px;
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      input {
+        position: absolute;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  textarea {
+    margin-top: 10px;
+  }
+}
+
+#encryption {
+  position: relative;
+
+  .spinner {
+    position: absolute;
+    left: 110px;
+    top: 5px;
+    opacity: 0.7;
+  }
+}
+
+#selectPGP {
+
+  border-top: none;
+  color: rgba(0,0,0,0.6);
+
+  li {
+    font-size: 16px;
+    height: 45px;
+    padding-right: 5px;
+
+    a {
+      padding-right: 0px;
+
+    }
+  }
+  .icon {
+    visibility: hidden;
+    width: 24px;
+    height: 24px;
+  }
+
+  .selected {
+    font-weight: bold;
+    color: black;
+    .icon {
+      visibility: visible;
+    }
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+#selectedFile {
+  position: relative;
+
+  span#filename {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    padding: 7px 33px 7px 112px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    font-size: 13px;
+  }
+
+  #removeAttachment {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 25px;
+    height: 25px;
+    margin: 3px;
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+    background-color: red;
+    border: 1px solid red;
+    color: white;
+    border-radius: 25px;
+    font-weight: bold;
+  }
+
+}
+
+.content-centered {
+  text-align: center;
+  padding: 5px;
+}
+
+.inner {
+  max-width: 450px;
+  margin: 0 auto;
+  position: relative;
+}
+.thankyou {
+  margin: 90px auto;
+  text-align: center;
+}
+.tipbox_avatar {
+  margin: 30px auto;
+  text-align: center;
+}
+
+.tipbox_avatar img {
+  margin: 10px;
+  width: 73px;
+}
+
+.thankyou img {
+  margin: 10px;
+  width: 73px;
+}
+
+img.rounded {
+  border-radius: 50%;
+}
+
+.secretcode {
+  font-weight:bold;
+  color: red;
+  text-align: center;
+  background-color: #eee;
+  padding: 8px;
+  margin: 10px 0px;
+  font-family:Courier;
+  border-color: #ccc
+}
+
+.secretcode a {
+  color: darkred;
+}
+.updated-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: 10px 10px;
+    font-size: 11px;
+}
