@@ -57,6 +57,9 @@ module.exports = function(options) {
           return;
         }
         document.querySelector('#tipSentModal').classList.toggle('active');
+        setTimeout(function() {
+          window.location.hash = "#home";
+        }, 10000);
       });
 
       // Listen to the upload progress.

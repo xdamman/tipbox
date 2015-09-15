@@ -50,7 +50,7 @@ module.exports = function() {
   }
 
   function togglePage(pageId) {
-    var activePage = homeView.querySelector('.active');
+    var activePage = homeView.querySelector('main.active');
 
     if(activePage) {
       activePage.classList.toggle('hidden');
@@ -80,8 +80,11 @@ module.exports = function() {
       if(pageId == "#create") {
         window.setCurrentView("#create");        
       }
+      else if(pageId.match(/^#compose/)) {
+        window.setCurrentView("#compose");
+      }
       else {
-        togglePage('#home', true);
+        togglePage('#home');
       }
     }
 
@@ -92,5 +95,5 @@ module.exports = function() {
     togglePage(window.location.hash);
   };
 
-  if(currentPage !== '' && isValidPage(currentPage)) { togglePage(currentPage, true); }
+  if(currentPage !== '' && isValidPage(currentPage)) { togglePage(currentPage); }
 };

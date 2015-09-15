@@ -28,6 +28,9 @@ window.setCurrentView = function(hash) {
   document.querySelector('#'+previousView).classList.add('hidden');
   document.querySelector('#'+currentView).classList.remove('hidden');
 
+  var activeModal = document.querySelector('.modal.active');
+  if(activeModal) toggleModal("#"+activeModal.id);
+
   window.currentView = currentView;
   return currentView;
 }
