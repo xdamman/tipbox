@@ -73,7 +73,7 @@ module.exports = function() {
       contentWrapper.classList.add(page.type);
 
       if(typeof page.init === 'function') {
-        pages[pageId].init();
+        page.init();
       }
 
     } else {
