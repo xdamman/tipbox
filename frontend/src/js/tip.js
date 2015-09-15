@@ -57,6 +57,7 @@ module.exports = function(options) {
           return;
         }
         document.querySelector('#tipSentModal').classList.toggle('active');
+        self.view.reset();
         setTimeout(function() {
           window.location.hash = "#home";
         }, 10000);

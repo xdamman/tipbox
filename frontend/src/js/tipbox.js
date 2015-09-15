@@ -172,7 +172,7 @@ if(window.currentView == "createView") {
       return showError("Invalid email address");
 
     if(!$agreeToS.checked)
-      return showError("You must agree our Terms of Service and Privacy Policy.");
+      return showError("You must accept our Terms of Service and Privacy Policy.");
 
     if(!subject)
       return showError("Subject cannot be empty");

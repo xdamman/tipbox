@@ -39,6 +39,14 @@ var TipView = function(options) {
     $progressBar.style.width = Math.round((done / total) * 100)+'%';
   };
 
+  this.reset = function() {
+    $header.classList.remove('error');
+    $progressBar.style.width = '0px';
+    $headerTitle.textContent = 'New message';
+    $sendBtn.innerHTML = '<strong>Send</strong>';
+    $body.value = '';
+  };
+
   this.encrypting = function() {
     // Resetting default value in case we just hit retry
     $sendBtn.innerHTML = '';
