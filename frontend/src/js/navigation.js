@@ -17,6 +17,7 @@ window.setCurrentView = function(hash) {
     currentView = 'createView';
   } else if(hash.match(/^#compose/)) {
     currentView = 'composeView';
+    if(window.ComposeViewController) window.ComposeViewController.init();
   } else {
     currentView = 'homeView';
   }

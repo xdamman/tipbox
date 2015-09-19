@@ -11,47 +11,53 @@ var api = new TipboxApi({pgp: server_pgp});
 //
 // ComposeView Controller
 //
-var ComposeViewController = (function() {
+window.ComposeViewController = (function() {
   var $sendBtn = document.querySelector('#sendBtn');
 
-  /*
-   * Params
-   */
-  var params = {
-      recipient: utils.getParam('recipient')
-    , subject: utils.getParam('subject', 'No subject')
-    , signature: utils.getParam('signature')
-    , fingerprint: utils.getParam('fingerprint')
-  }
+  var init = function() {
 
-  var els = document.querySelectorAll('[data-attr]');
-  for(var i=0;i<els.length;i++) {
-    var el = els[i];
-    var attr = el.dataset.attr;
-    if(el.attributes.title) {
-      el.setAttribute('title', params[attr]);
+    /*
+     * Loading the parameters from the URL
+     */
+    var params = {
+        recipient: utils.getParam('recipient')
+      , subject: utils.getParam('subject', 'No subject')
+      , signature: utils.getParam('signature')
+      , fingerprint: utils.getParam('fingerprint')
     }
-    if(params[attr]) el.textContent = params[attr];
-  }
 
-  var tip;
-  var options = {
-      el: document.querySelector('#tip')
-    , recipient: params.recipient
-    , subject: params.subject
-    , signature: params.signature
-    , api: api
-  };
+    /*
+     * Prefill the Compose View with these parameters
+     */
+    var els = document.querySelectorAll('[data-attr]');
+    for(var i=0;i<els.length;i++) {
+      var el = els[i];
+      var attr = el.dataset.attr;
+      if(el.attributes.title) {
+        el.setAttribute('title', params[attr]);
+      }
+      if(params[attr]) el.textContent = params[attr];
+    }
 
-  if(params.fingerprint && params.fingerprint.length == 40) {
-    api.pgp.get(params.fingerprint, function(err, recipient_pgp) {
-      options.pgp = recipient_pgp;
-      options.fingerprint = params.fingerprint;
+    var tip;
+    var options = {
+        el: document.querySelector('#tip')
+      , recipient: params.recipient
+      , subject: params.subject
+      , signature: params.signature
+      , api: api
+    };
+
+    if(params.fingerprint && params.fingerprint.length == 40) {
+      api.pgp.get(params.fingerprint, function(err, recipient_pgp) {
+        options.pgp = recipient_pgp;
+        options.fingerprint = params.fingerprint;
+        tip = new Tip(options);
+      });
+    }
+    else {
       tip = new Tip(options);
-    });
-  }
-  else {
-    tip = new Tip(options);
+    }
   }
 
   $sendBtn.addEventListener('click', function(e) {
@@ -59,6 +65,10 @@ var ComposeViewController = (function() {
     tip.send();
     return false;
   });
+
+  init();
+
+  return { init: init };
 })();
 
 //
