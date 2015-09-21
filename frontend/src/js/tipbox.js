@@ -7,6 +7,7 @@ var utils = require('./utils');
 var server_pgp = require('../../../keys/public.key.json');
 
 var api = new TipboxApi({pgp: server_pgp});
+var tip;
 
 //
 // ComposeView Controller
@@ -39,7 +40,6 @@ window.ComposeViewController = (function() {
       if(params[attr]) el.textContent = params[attr];
     }
 
-    var tip;
     var options = {
         el: document.querySelector('#tip')
       , recipient: params.recipient
