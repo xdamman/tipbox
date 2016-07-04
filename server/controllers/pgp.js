@@ -18,7 +18,7 @@ module.exports = function(app) {
         var fkeys = [];
 	for (i = 0; i < keys.length; ++i) {
 	  /* filter out revoked keys */
-	  if (keys[i].flags.match(/r/))
+	  if (keys[i].flags && keys[i].flags.match(/r/))
 	    continue;
 	  fkeys.push(keys[i]);
 	}
