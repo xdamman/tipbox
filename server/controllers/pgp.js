@@ -12,11 +12,19 @@ module.exports = function(app) {
     index: function(req, res, next) {
       var email = req.param('email');
       if(memoryCache['index/'+email]) return res.send(memoryCache['index/'+email]);
+      /* search keys with exact match */
       pgpsearch.index(email, function(err, keys) {
         if(err) return res.send(err);
-        if(app.set('env') !== 'production') memoryCache['index/'+email] = { keys: keys };
+        var fkeys = [];
+	for (i = 0; i < keys.length; ++i) {
+	  /* filter out revoked keys */
+	  if (keys[i].flags.match(/r/))
+	    continue;
+	  fkeys.push(keys[i]);
+	}
+        if(app.set('env') !== 'production') memoryCache['index/'+email] = { keys: fkeys };
         res.send({keys: keys});
-      });
+      }, true);
     },
 
     get: function(req, res, next) {
