@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     watchify = require('watchify'),
     browserify = require('browserify'),
-    minifyCSS = require('gulp-minify-css'),
+    cleanCSS = require('gulp-clean-css'),
     uncss = require('gulp-uncss'),
     mold = require('mold-source-map'),
     uglify = require('gulp-uglify'),
@@ -108,7 +108,7 @@ gulp.task('minify-css', ['less'], function() {
         html: ['./frontend/src/index.html'],
         ignore: [/\.selected/, /\.active/, /\.encrypted/, /\.slideout-menu/, /\.slideout-open/, /\.slideout-panel/, /\.text-page/, /\.donation-page/, /\.transaction-page/]
     }))
-    .pipe(minifyCSS())
+    .pipe(cleanCSS())
     // .pipe(rename({ extname: '.min.css' }))
     .pipe(gulp.dest('frontend/dist/css/'));
 });
