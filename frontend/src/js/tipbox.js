@@ -12,6 +12,7 @@ var api = new TipboxApi({pgp: server_pgp});
 // ComposeView Controller
 //
 window.ComposeViewController = (function() {
+  var tip;
   var $sendBtn = document.querySelector('#sendBtn');
 
   var init = function() {
@@ -39,7 +40,6 @@ window.ComposeViewController = (function() {
       if(params[attr]) el.textContent = params[attr];
     }
 
-    var tip;
     var options = {
         el: document.querySelector('#tip')
       , recipient: params.recipient
