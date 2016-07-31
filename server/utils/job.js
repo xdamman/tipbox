@@ -1,4 +1,5 @@
 var async = require('async');
+var logger = require('./logger').get()
 
 var Job = function(fn, data) {
 
@@ -26,7 +27,7 @@ var Queue = function() {
     this.queue[id].run(fn);
     delete this.queue[id];
     this.length--;
-    console.log("jobs> Job id "+id+" executed and removed from the queue. Queue length: "+this.length);
+    logger.info("jobs> Job id "+id+" executed and removed from the queue. Queue length: "+this.length);
   };
 
   this.add = function(job, delay) {
@@ -35,7 +36,7 @@ var Queue = function() {
     this.length++;
     this.lastId = id;
 
-    console.log("jobs> Adding a new job (id: "+id+"). Total jobs: ", this.length);
+    logger.info("jobs> Adding a new job (id: "+id+"). Total jobs: ", this.length);
 
     var delay = delay || 1000*15;
     setTimeout(function(id) {
@@ -54,9 +55,9 @@ var Queue = function() {
   };
 
   this.runAll = function(fn) {
-    console.log("jobs> Processing "+this.length+" jobs in parallel");
+    logger.info("jobs> Processing "+this.length+" jobs in parallel");
     async.each(self.getQueueArray(), function(job, done) {
-      job.run(done); 
+      job.run(done);
     }, function(err) {
       if(!err) {
         self.queue = [];
@@ -68,4 +69,4 @@ var Queue = function() {
 };
 
 module.exports.Job = Job;
-module.exports.Queue = Queue; 
+module.exports.Queue = Queue;

@@ -6,6 +6,7 @@ var mailer = new (require('../utils/mailer')).Mailer(settings);
 var utils = require('../utils/utils');
 var counter = require('../utils/counter');
 var fs = require("fs");
+var logger = require('../utils/logger').get()
 
 module.exports = function(app) {
 
@@ -24,7 +25,7 @@ module.exports = function(app) {
         return res.status(400).send({code:401,error: "Subject cannot be empty"})
 
       var fingerprint = req.body.fingerprint || '';
-      var hashBase = req.body.recipient + req.body.subject + fingerprint; 
+      var hashBase = req.body.recipient + req.body.subject + fingerprint;
       sig = crypto.createHmac('sha1', settings.hmacKey || '').update(hashBase).digest('hex');
       url = app.set('protocol')+'://'+app.set('host');
       url = url + '#compose/' + escape(req.body.recipient) + '/' +
@@ -41,10 +42,10 @@ module.exports = function(app) {
       };
       mailer.send(data, function(err, info){
         if (err) {
-          console.log("Error sending new tipbox email: " + err);
+          logger.warn("Error sending new tipbox email: " + err);
           return res.send({code: 500, err: err});
         } else {
-          console.log("New tipbox email sent: " + JSON.stringify(info));
+          logger.info("New tipbox email sent: " + JSON.stringify(info));
           return res.send({code: 200, url: url});
         }
       });

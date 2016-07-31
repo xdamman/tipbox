@@ -1,14 +1,15 @@
 var mailgun = require('mailgun-js');
 var SMTPConnection = require('smtp-connection');
 var nodemailer = require('nodemailer');
+var logger = require('./logger').get()
 
 var Mailer = function(settings) {
   this.settings = settings;
   if (settings.mailgunApiKey && settings.mailgunApiKey.length > 0 && settings.mailgunDomain) {
-    console.log("Using Mailgun transport");
+    logger.info("Using Mailgun transport");
     this.mailgunMailer = mailgun({apiKey: settings.mailgunApiKey, domain: settings.mailgunDomain});
   } else {
-    console.log("Using SMTP transport");
+    logger.info("Using SMTP transport");
     this.smtpMailer = nodemailer.createTransport({
       host: (settings.smtpHost || 'localhost'),
       port: (settings.smtpPort || 25)

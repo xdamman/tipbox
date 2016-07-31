@@ -3,6 +3,7 @@ var fs = require('fs');
 var _ = require('lodash');
 var env = process.env.NODE_ENV || 'development';
 var settings = require('../config/settings')(env);
+var logger = require('../utils/logger').get();
 var passphrase = settings.pgpKeyPassphrase;
 var pgp_key = settings.pgpPrivateKey;
 var ring;
@@ -21,15 +22,15 @@ function getKeyRing(){
           passphrase: passphrase
         }, function(err) {
           if (!err) {
-            console.log('Loaded private key with passphrase');
+            logger.info('Loaded private key with passphrase');
           } else {
-            console.log('Err:', err);
+            logger.error('Err:', err);
             process.exit();
           }
 
         });
       } else {
-        console.log('Loaded private key w/o passphrase');
+        logger.info('Loaded private key w/o passphrase');
       }
       ring.add_key_manager(k);
     }
@@ -49,7 +50,7 @@ exports.pgp = function(req, res, next) {
 
   kbpgp.unbox({keyfetch: getKeyRing(), armored: req.body.encrypted }, function(err, literals) {
     if (err !== null) {
-      console.log("Decryption Error: ", err);
+      logger.error("Decryption Error: ", err);
       return res.status(401).send("Invalid PGP payload");
     } else {
       try {
@@ -57,7 +58,7 @@ exports.pgp = function(req, res, next) {
 
         _.assign(req.body, decrypted.params);
 
-        console.log("req.body: ", req.body);
+        logger.debug("req.body: ", req.body);
 
         // We don't pass any data as part of the path in case of man-in-the-middle attack
         // We just post to the root path a PGP encrypted payload
@@ -66,7 +67,7 @@ exports.pgp = function(req, res, next) {
           req.url = decrypted.path;
       }
       catch(e) {
-        console.error("Unable to parse JSON", literals, e.stack, e);
+        logger.error("Unable to parse JSON", literals, e.stack, e);
         return res.status(402).send("Invalid JSON payload");
       }
       next();
