@@ -8,7 +8,8 @@ module.exports = function(app) {
 
   // Log a heartbeat every 10 seconds (we don't need to fill any logs here..)
   setInterval(function() {
-    logger.warn("[-] We're still serving!");
+    // On production, we only show error level or higher for privacy
+    logger.error("[-] We're still serving!");
   }, 10000);
 
   app.use(function(req, res, next) {

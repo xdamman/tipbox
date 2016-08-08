@@ -8,7 +8,7 @@ module.exports = function(app) {
 
   // Log a heartbeat every 10 seconds (we don't need to fill any logs here..)
   setInterval(function() {
-    logger.warn("heartbeat");
+    logger.error("heartbeat");
   }, 1000);
 
   app.set('protocol', 'https');
