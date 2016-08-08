@@ -1,7 +1,7 @@
 var express = require('express');
 var os = require("os");
 var app = express();
-var logger = require('./utils/logger').get()
+var logger = require('./utils/logger').instance()
 
 app.set('env', process.env.NODE_ENV || "development");
 

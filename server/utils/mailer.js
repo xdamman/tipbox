@@ -1,7 +1,7 @@
 var mailgun = require('mailgun-js');
 var SMTPConnection = require('smtp-connection');
 var nodemailer = require('nodemailer');
-var logger = require('./logger').get()
+var logger = require('./logger').instance()
 
 var Mailer = function(settings) {
   this.settings = settings;

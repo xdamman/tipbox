@@ -3,7 +3,7 @@ var fs = require('fs');
 var _ = require('lodash');
 var env = process.env.NODE_ENV || 'development';
 var settings = require('../config/settings')(env);
-var logger = require('../utils/logger').get();
+var logger = require('../utils/logger').instance();
 var passphrase = settings.pgpKeyPassphrase;
 var pgp_key = settings.pgpPrivateKey;
 var ring;

@@ -5,7 +5,7 @@ var settings = require('../config/settings')(env);
 var mailer = new (require('../utils/mailer')).Mailer(settings);
 var counter = require('../utils/counter')
 var Job = require('../utils/job').Job;
-var logger = require('../utils/logger').get()
+var logger = require('../utils/logger').instance()
 
 module.exports = function(app) {
 

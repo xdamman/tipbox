@@ -1,5 +1,5 @@
 var async = require('async');
-var logger = require('./logger').get()
+var logger = require('./logger').instance()
 
 var Job = function(fn, data) {
 

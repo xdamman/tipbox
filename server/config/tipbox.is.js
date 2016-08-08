@@ -1,4 +1,4 @@
-var logger = require('../utils/logger').get()
+var logger = require('../utils/logger').instance()
 
 module.exports = function(app) {
 

@@ -1,6 +1,6 @@
 var os = require("os");
 var host = process.env.HOST || os.hostname() || 'localhost';
-var logger = require('../utils/logger').get()
+var logger = require('../utils/logger').instance()
 
 module.exports = function(app) {
   app.set('staticMaxAge', 0);

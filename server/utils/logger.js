@@ -14,7 +14,7 @@ function setup() {
   return sLogger
 }
 
-exports.get = function() {
+exports.instance = function() {
   if (typeof sLogger !== 'undefined') {
     return sLogger
   }

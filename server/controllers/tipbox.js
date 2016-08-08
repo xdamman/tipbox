@@ -6,7 +6,7 @@ var mailer = new (require('../utils/mailer')).Mailer(settings);
 var utils = require('../utils/utils');
 var counter = require('../utils/counter');
 var fs = require("fs");
-var logger = require('../utils/logger').get()
+var logger = require('../utils/logger').instance()
 
 module.exports = function(app) {
 
