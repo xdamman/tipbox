@@ -10,7 +10,8 @@ var defaults = {
       'hostDomain': env.HOST_DOMAIN || env.MAILGUN_DOMAIN || 'tipbox.dev',
       'hmacKey': env.HMAC_KEY || '',
       'groupId': env.OC_GROUPID,
-      'apiKey': env.OC_API_KEY
+      'apiKey': env.OC_API_KEY,
+      'logLevel': 'error'
 };
 
 var settings = {
@@ -21,12 +22,14 @@ var settings = {
       'smtpPort': env.SMTP_PORT,
       'pgpKeyPassphrase': '1234',
       'hmacKey': '',
-      'apiUrl': 'https://opencollective.herokuapp.com/'
+      'apiUrl': 'https://opencollective.herokuapp.com/',
+      'logLevel': 'debug'
     }
   , 'staging': {
       'env': env.NODE_ENV,
       'mailgunApiKey': env.MAILGUN_API_KEY,
-      'mailgunDomain': env.MAILGUN_DOMAIN
+      'mailgunDomain': env.MAILGUN_DOMAIN,
+      'logLevel': 'info'
   }
   , 'tipbox.in': {
       'mailgunApiKey': env.MAILGUN_API_KEY,

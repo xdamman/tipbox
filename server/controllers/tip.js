@@ -5,6 +5,7 @@ var settings = require('../config/settings')(env);
 var mailer = new (require('../utils/mailer')).Mailer(settings);
 var counter = require('../utils/counter')
 var Job = require('../utils/job').Job;
+var logger = require('../utils/logger').instance()
 
 module.exports = function(app) {
 
@@ -14,7 +15,7 @@ module.exports = function(app) {
       var sig, url;
       var hashBase = req.body.recipient + req.body.subject + (req.body.fingerprint || '');
       var sig = crypto.createHmac('sha1', settings.hmacKey || '').update(hashBase).digest('hex');
-      console.log(sig, ':', req.body.signature);
+      logger.debug(sig, ':', req.body.signature);
       if (req.body.signature === sig) {
         var data, job, delay;
 
@@ -37,7 +38,7 @@ module.exports = function(app) {
         } else {
           // We will actually send the email in between 10 and 20mn
           // to make sure one observer cannot compare and synchronize logs
-          delay = 10*60*1000 + Math.round(Math.random() * 10*60*1000); 
+          delay = 10*60*1000 + Math.round(Math.random() * 10*60*1000);
           job = new Job(function(data, fn) {
             mailer.sendMime(data, function (error, body) {
                 fn(error, body);

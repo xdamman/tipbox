@@ -68,7 +68,8 @@
     "underscore": "^1.7.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^0.1.1",
-    "watchify": "^0.6.2"
+    "watchify": "^0.6.2",
+    "winston": "^2.2.0"
   },
   "devDependencies": {
     "chai": "^1.10.0",
