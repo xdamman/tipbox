@@ -1,16 +1,22 @@
 var express = require('express');
 var os = require("os");
 var app = express();
+var logger = require('./utils/logger').instance()
 
 app.set('env', process.env.NODE_ENV || "development");
 
 require('./boot')(app);
 
+process.on('uncaughtException', function(err) {
+  logger.error('Uncaught Exception', err);
+  logger.error(err.stack);
+});
+
 process.on('SIGTERM', function() {
-  console.log("Received SIGTERM");
+  logger.info("Received SIGTERM");
 
   app.jobs.runAll(function() {
-    console.log("All jobs done, exiting");
+    logger.info("All jobs done, exiting");
     process.exit(0);
   });
 
@@ -18,5 +24,5 @@ process.on('SIGTERM', function() {
 
 var port = process.env.PORT || 3000;
 var host = process.env.HOST || os.hostname() || 'localhost';
-console.log("Listening on " + host + ":" + port+" in "+app.get('env')+" environment, pid: "+process.pid);
+logger.prod("Listening on " + host + ":" + port+" in "+app.get('env')+" environment, pid: "+process.pid);
 app.listen(port, host);

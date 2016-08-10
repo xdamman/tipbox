@@ -1,17 +1,15 @@
+var logger = require('../utils/logger').instance()
+
 module.exports = function(app) {
 
   // We don't want to leave a trace on the visitor's machine
   // so we turn off caching
   app.set('staticMaxAge', 0);
 
-  // We make sure we don't log anything
-  // except a heartbeat every second to fill up the 1,500 backlog of Heroku in 25mn
-  var log = console.log;
+  // Log a heartbeat every 10 seconds (we don't need to fill any logs here..)
   setInterval(function() {
-    log("heartbeat");
+    logger.prod("heartbeat");
   }, 1000);
-
-  console.log = console.error = function() {};
 
   app.set('protocol', 'https');
   app.set('host', 'tipbox.in');
