@@ -34,7 +34,8 @@ Mailer.prototype.sendMime = function(data, callback){
     connection.connect(function(){
       var closer = function(err) {
         if (err) {
-          console.log(err)
+          logger.error("Error sending mime email")
+          logger.warn("Error sending mime email: ", err)
         }
         connection.quit()
         callback(err)
