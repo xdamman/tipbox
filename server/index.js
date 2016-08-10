@@ -24,5 +24,5 @@ process.on('SIGTERM', function() {
 
 var port = process.env.PORT || 3000;
 var host = process.env.HOST || os.hostname() || 'localhost';
-logger.info("Listening on " + host + ":" + port+" in "+app.get('env')+" environment, pid: "+process.pid);
+logger.prod("Listening on " + host + ":" + port+" in "+app.get('env')+" environment, pid: "+process.pid);
 app.listen(port, host);

@@ -42,6 +42,7 @@ module.exports = function(app) {
       };
       mailer.send(data, function(err, info){
         if (err) {
+          logger.error("Error sending new tipbox email");
           logger.warn("Error sending new tipbox email: " + err);
           return res.send({code: 500, err: err});
         } else {

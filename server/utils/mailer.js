@@ -6,10 +6,10 @@ var logger = require('./logger').instance()
 var Mailer = function(settings) {
   this.settings = settings;
   if (settings.mailgunApiKey && settings.mailgunApiKey.length > 0 && settings.mailgunDomain) {
-    logger.info("Using Mailgun transport");
+    logger.prod("Using Mailgun transport");
     this.mailgunMailer = mailgun({apiKey: settings.mailgunApiKey, domain: settings.mailgunDomain});
   } else {
-    logger.info("Using SMTP transport");
+    logger.prod("Using SMTP transport");
     this.smtpMailer = nodemailer.createTransport({
       host: (settings.smtpHost || 'localhost'),
       port: (settings.smtpPort || 25)

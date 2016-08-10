@@ -22,15 +22,16 @@ function getKeyRing(){
           passphrase: passphrase
         }, function(err) {
           if (!err) {
-            logger.info('Loaded private key with passphrase');
+            logger.prod('Loaded private key with passphrase');
           } else {
-            logger.warn('Err:', err);
+            logger.error('Error unlocking pgp', err);
+            logger.warn('Error unlocking pgp', err);
             process.exit();
           }
 
         });
       } else {
-        logger.info('Loaded private key w/o passphrase');
+        logger.prod('Loaded private key w/o passphrase');
       }
       ring.add_key_manager(k);
     }
@@ -50,6 +51,7 @@ exports.pgp = function(req, res, next) {
 
   kbpgp.unbox({keyfetch: getKeyRing(), armored: req.body.encrypted }, function(err, literals) {
     if (err !== null) {
+      logger.error("Decryption Error");
       logger.warn("Decryption Error: ", err);
       return res.status(401).send("Invalid PGP payload");
     } else {
@@ -67,6 +69,7 @@ exports.pgp = function(req, res, next) {
           req.url = decrypted.path;
       }
       catch(e) {
+        logger.error("Unable to parse JSON");
         logger.warn("Unable to parse JSON", literals, e.stack, e);
         return res.status(402).send("Invalid JSON payload");
       }
