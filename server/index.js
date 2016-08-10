@@ -7,6 +7,11 @@ app.set('env', process.env.NODE_ENV || "development");
 
 require('./boot')(app);
 
+process.on('uncaughtException', function(err) {
+  logger.error('Uncaught Exception', err);
+  logger.error(err.stack);
+});
+
 process.on('SIGTERM', function() {
   logger.info("Received SIGTERM");
 
