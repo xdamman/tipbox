@@ -32,10 +32,17 @@ Mailer.prototype.sendMime = function(data, callback){
       host: this.settings.smtpHost
     });
     connection.connect(function(){
+      var closer = function(err) {
+        if (err) {
+          console.log(err)
+        }
+        connection.quit()
+        callback(err)
+      }
       connection.send({
         to: data.to,
         from: data.from
-      }, data.message, callback);
+      }, data.message, closer);
     });
   } else if (this.mailgunMailer) {
     mailgunMailer.messages().sendMime(data, callback);
