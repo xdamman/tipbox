@@ -11,7 +11,7 @@ var defaults = {
       'hmacKey': env.HMAC_KEY || '',
       'groupId': env.OC_GROUPID,
       'apiKey': env.OC_API_KEY,
-      'logLevel': 'warn'
+      'logLevel': 'error'
 };
 
 var settings = {
