@@ -1,14 +1,15 @@
 var mailgun = require('mailgun-js');
 var SMTPConnection = require('smtp-connection');
 var nodemailer = require('nodemailer');
+var logger = require('./logger').instance()
 
 var Mailer = function(settings) {
   this.settings = settings;
   if (settings.mailgunApiKey && settings.mailgunApiKey.length > 0 && settings.mailgunDomain) {
-    console.log("Using Mailgun transport");
+    logger.prod("Using Mailgun transport");
     this.mailgunMailer = mailgun({apiKey: settings.mailgunApiKey, domain: settings.mailgunDomain});
   } else {
-    console.log("Using SMTP transport");
+    logger.prod("Using SMTP transport");
     this.smtpMailer = nodemailer.createTransport({
       host: (settings.smtpHost || 'localhost'),
       port: (settings.smtpPort || 25)
@@ -33,7 +34,8 @@ Mailer.prototype.sendMime = function(data, callback){
     connection.connect(function(){
       var closer = function(err) {
         if (err) {
-          console.log(err)
+          logger.error("Error sending mime email")
+          logger.warn("Error sending mime email: ", err)
         }
         connection.quit()
         callback(err)
