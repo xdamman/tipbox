@@ -1,5 +1,8 @@
 # Tipbox
 
+[![Backers on Open Collective](https://opencollective.com/tipbox/backers/badge.svg)](#backers)
+[![Sponsors on Open Collective](https://opencollective.com/tipbox/sponsors/badge.svg)](#sponsors)
+
 Share a unique URL to receive anonymous tips (with end-to-end PGP encryption).
 Try it at https://tipbox.is
 
@@ -80,6 +83,78 @@ And finally, you can run the tests:
     
 Or simply put, `npm run test`
 
-<h3>Who is behind this?</h3>
-<p>Xavier Damman (<a href="https://twitter.com/xdamman">@xdamman</a>) and Mark Percival (<a href="https://twitter.com/mdp">@mdp</a>)</p>
+
+## Backers
+
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/tipbox#backer)]
+
+<a href="https://opencollective.com/tipbox/backer/0/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/1/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/2/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/3/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/4/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/5/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/6/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/7/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/8/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/9/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/9/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/10/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/10/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/11/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/11/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/12/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/12/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/13/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/13/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/14/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/14/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/15/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/15/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/16/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/16/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/17/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/17/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/18/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/18/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/19/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/19/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/20/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/20/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/21/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/21/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/22/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/22/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/23/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/23/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/24/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/24/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/25/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/25/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/26/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/26/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/27/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/27/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/28/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/28/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/backer/29/website" target="_blank"><img src="https://opencollective.com/tipbox/backer/29/avatar.svg"></a>
+
+
+## Sponsors
+
+Is your company using Tipbox? Sponsor us, we will show your logo on our Github page and on our website. [[Become a sponsor](https://opencollective.com/tipbox#sponsor)]
+
+<a href="https://opencollective.com/tipbox/sponsor/0/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/1/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/2/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/3/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/4/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/5/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/6/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/7/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/8/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/9/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/10/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/10/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/11/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/11/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/12/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/12/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/13/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/13/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/14/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/14/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/15/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/15/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/16/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/16/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/17/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/17/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/18/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/18/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/19/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/19/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/20/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/20/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/21/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/21/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/22/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/22/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/23/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/23/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/24/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/24/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/25/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/25/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/26/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/26/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/27/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/27/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/28/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/28/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/29/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/29/avatar.svg"></a>
+
+## Who is behind this?
+<p>Xavier Damman (<a href="https://twitter.com/xdamman">@xdamman</a>), Mark Percival (<a href="https://twitter.com/mdp">@mdp</a>) and Thomas Gouverneur (<a href="https://twitter.com/tgouverneur">@tgouverneur</a>).</p>
 <p>This is an open source project. Contributions are welcome! <a href="https://github.com/xdamman/tipbox">https://github.com/xdamman/tipbox</a>.
