@@ -158,3 +158,33 @@ Is your company using Tipbox? Sponsor us, we will show your logo on our Github p
 ## Who is behind this?
 <p>Xavier Damman (<a href="https://twitter.com/xdamman">@xdamman</a>), Mark Percival (<a href="https://twitter.com/mdp">@mdp</a>) and Thomas Gouverneur (<a href="https://twitter.com/tgouverneur">@tgouverneur</a>).</p>
 <p>This is an open source project. Contributions are welcome! <a href="https://github.com/xdamman/tipbox">https://github.com/xdamman/tipbox</a>.
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute]](blob/master/CONTRIBUTING.md).
+<a href="graphs/contributors"><img src="https://opencollective.com/tipbox/contributors.svg?width=890" /></a>
+
+
+## Backers
+
+Thank you to all our backers! [[Become a backer](https://opencollective.com/tipbox#backer)]
+
+<a href="https://opencollective.com/tipbox#backers" target="_blank"><img src="https://opencollective.com/tipbox/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Thank you to all our sponsors! (please ask your company to also support this open source project by [[becoming a sponsor](https://opencollective.com/tipbox#sponsor))
+
+<a href="https://opencollective.com/tipbox/sponsor/0/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/1/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/2/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/3/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/4/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/5/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/6/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/7/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/8/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/tipbox/sponsor/9/website" target="_blank"><img src="https://opencollective.com/tipbox/sponsor/9/avatar.svg"></a>
+
+

@@ -14,7 +14,7 @@
     "tipbox.in": "gulp build && NODE_ENV=tipbox.in npm start",
     "tipbox.is": "gulp build && NODE_ENV=tipbox.is npm start",
     "deploy": "gulp build && git push heroku",
-    "postinstall": "node node_modules/.bin/gulp build && ./node_modules/.bin/opencollective-postinstall || exit 0",
+    "postinstall": "node node_modules/.bin/gulp build && opencollective postinstall",
     "clean": "git branch --merged master | grep -v 'master$' | xargs git branch -d 2>/dev/null && exit 1",
     "test": "./node_modules/.bin/nightwatch -c test/nightwatch.json"
   },
@@ -62,6 +62,7 @@
     "node-pgp-search": "0.1.7",
     "nodemailer": "^1.3.4",
     "numbro": "1.1.1",
+    "opencollective": "^1.0.3",
     "request": "^2.58.0",
     "slideout": "^0.1.8",
     "smtp-connection": "^1.2.0",
@@ -74,8 +75,7 @@
   "devDependencies": {
     "chai": "^1.10.0",
     "mocha": "^2.0.1",
-    "nightwatch": "^0.5.33",
-    "opencollective-postinstall": "^1.0.16"
+    "nightwatch": "^0.5.33"
   },
   "collective": {
     "type": "opencollective",
