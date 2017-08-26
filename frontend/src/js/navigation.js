@@ -1,4 +1,5 @@
 var Slideout = require('slideout');
+var FontFaceObserver = require('fontfaceobserver');
 
 if(window.location.host == "tipbox.in" && !window.location.hash) {
   window.location.href = "https://tipbox.is";
@@ -11,7 +12,7 @@ window.setCurrentView = function(hash) {
   }
 
   var previousView = window.currentView || "homeView";
-  var currentView; 
+  var currentView;
 
   if(hash.match(/^#create/)) {
     currentView = 'createView';
@@ -82,3 +83,9 @@ window.slideout = new Slideout({
 document.getElementById('open-menu').addEventListener('click', function() {
   slideout.toggle();
 });
+
+var observer = new window.FontFaceObserver('Roboto', { weight: 400 });
+
+observer.check().then(function () {
+  document.documentElement.className += " webfont-loaded";
+}, function () {});

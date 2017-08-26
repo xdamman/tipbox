@@ -19,9 +19,13 @@ body {
   padding: 0;
   border: 0;
   vertical-align: baseline;
-  font-family: 'Roboto', Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 1em;
   position: static;
+}
+
+.webfont-loaded body {
+  font-family: 'Roboto', Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 /** Social buttons */
@@ -513,7 +517,7 @@ body {
       border-radius: 0;
       border-bottom: 1px solid @text-color;
       padding: 0 0 5px;
-      font-family: 'Roboto', Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-family: inherit;
       height: 35px;
 
       &::-webkit-inner-spin-button,
