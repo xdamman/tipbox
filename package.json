@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/xdamman/tipbox",
   "dependencies": {
-    "async": "^0.9.0",
+    "async": "^2.6.3",
     "body-parser": "^1.9.0",
     "browserify": "^10.2.4",
     "events": "^1.0.2",
@@ -48,7 +48,7 @@
     "gulp-sourcemaps": "^0.4.1",
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^0.3.1",
-    "gulp-uncss": "^0.5.1",
+    "gulp-uncss": "^1.0.6",
     "gulp-util": "^2.2.14",
     "hogan.js": "^3.0.2",
     "inherits": "^2.0.1",
@@ -56,7 +56,7 @@
     "kbpgp": "^2.0.46",
     "less-plugin-autoprefix": "^1.4.0",
     "lodash": "^2.4.1",
-    "mailgun-js": "^0.6.7",
+    "mailgun-js": "^0.22.0",
     "mold-source-map": "^0.3.0",
     "moment": "^2.10.2",
     "node-pgp-search": "0.1.7",
@@ -65,12 +65,12 @@
     "opencollective": "^1.0.3",
     "request": "^2.58.0",
     "slideout": "^0.1.8",
-    "smtp-connection": "^1.2.0",
+    "smtp-connection": "^4.0.2",
     "underscore": "^1.7.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^0.1.1",
-    "watchify": "^0.6.2",
-    "winston": "^2.2.0"
+    "watchify": "^3.11.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "chai": "^1.10.0",

@@ -114,5 +114,5 @@ gulp.task('minify-css', ['less'], function() {
 });
 
 gulp.task('default', ['watch', 'less']);
-gulp.task('compile', ['minify-css', 'browserify-app', 'browserify-nav']);
+gulp.task('compile', ['browserify-app', 'browserify-nav']);
 gulp.task('build', ['copy']);
