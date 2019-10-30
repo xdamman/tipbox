@@ -4,7 +4,7 @@
   "description": "Collect anonymous feedback & tips from the communities you want.",
   "main": "index.js",
   "engines": {
-    "node": "0.10.26"
+    "node": ">=6"
   },
   "scripts": {
     "start": "node server",
@@ -53,7 +53,8 @@
     "hogan.js": "^3.0.2",
     "inherits": "^2.0.1",
     "jquery": "^2.1.1",
-    "kbpgp": "^2.0.46",
+    "kbpgp": "2.0.46",
+    "keybase-nacl": "1.0.4",
     "less-plugin-autoprefix": "^1.4.0",
     "lodash": "^2.4.1",
     "mailgun-js": "^0.6.7",
