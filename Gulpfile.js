@@ -4,8 +4,7 @@ var gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     watchify = require('watchify'),
     browserify = require('browserify'),
-    minifyCSS = require('gulp-minify-css'),
-    uncss = require('gulp-uncss'),
+    cleanCSS = require('gulp-clean-css');
     mold = require('mold-source-map'),
     uglify = require('gulp-uglify'),
     rename = require("gulp-rename"),
@@ -95,24 +94,21 @@ gulp.task('watch', function() {
     });
 });
 
-gulp.task('copy',['compile'], function() {
+gulp.task('minify-css', gulp.series('less', function() {
+    return gulp.src('frontend/src/css/tipbox.css')
+    .pipe(cleanCSS())
+    // .pipe(rename({ extname: '.min.css' }))
+    .pipe(gulp.dest('frontend/dist/css/'));
+}));
+
+gulp.task('default', gulp.series('watch', 'less'));
+gulp.task('compile', gulp.series('browserify-app', 'browserify-nav'));
+
+gulp.task('copy', gulp.series('compile', function() {
     gulp.src(filesToCopy, {
         base: './frontend/src/'
     })
     .pipe(gulp.dest('frontend/dist'));
-});
+}));
 
-gulp.task('minify-css', ['less'], function() {
-    return gulp.src('frontend/src/css/tipbox.css')
-        .pipe(uncss({
-        html: ['./frontend/src/index.html'],
-        ignore: [/\.selected/, /\.active/, /\.encrypted/, /\.slideout-menu/, /\.slideout-open/, /\.slideout-panel/, /\.text-page/, /\.donation-page/, /\.transaction-page/]
-    }))
-    .pipe(minifyCSS())
-    // .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('frontend/dist/css/'));
-});
-
-gulp.task('default', ['watch', 'less']);
-gulp.task('compile', ['browserify-app', 'browserify-nav']);
-gulp.task('build', ['copy']);
+gulp.task('build', gulp.series('copy'));

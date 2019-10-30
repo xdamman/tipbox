@@ -25,9 +25,8 @@ var sLogger;
 function setup() {
   var env = process.env.NODE_ENV || 'development'
   var logLevel = require('../config/settings')(env)['logLevel'] || 'debug'
-  sLogger = new winston.Logger({
+  sLogger = new winston.createLogger({
     levels: logLevels.levels,
-    colors: logLevels.colors,
     level: logLevel,
     transports: [
       new (winston.transports.Console)()
