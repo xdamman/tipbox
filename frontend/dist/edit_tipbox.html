@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tipbox</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Include the compiled Ratchet CSS -->
+    <link href="/css/ratchet.css" rel="stylesheet">
+
+    <!-- Include the compiled Ratchet JS -->
+    <script src="/js/ratchet.js"></script>
+    <style>
+    .content .inner {
+      max-width: 450px;
+      margin: 0 auto;
+    }
+    </style>
+  </head>
+  <body>
+
+    <!-- Make sure all your bars are the first things in your <body> -->
+    <header class="bar bar-nav">
+      <h1 class="title">Tipbox</h1>
+    </header>
+
+    <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+    <div class="content">
+      <div class="inner">
+
+        <div class="content-padded">
+          <p>Fill out this form with your email address and the topic on which you would like to get anonymous feedback or tips on.</p>
+        </div>
+
+        <form class="input-group">
+          <div class="input-row">
+            <label>Your email</label>
+            <input type="text" placeholder="journalist@media.co">
+          </div>
+          <div class="input-row">
+            <label>Topic</label>
+            <input type="text" name="topic" placeholder="Any inside info about x?" />
+          </div>
+          <button class="btn btn-positive btn-block">Create tipbox</button>
+        </form>
+
+        <div class="content-padded">
+          <p>&nbsp;</p>
+          <h3>How does it work?</h3>
+          <p>After creating a tipbox, you get a unique secret URL that you can share with any group of people from which you want to collect anonymous feedback or tips (your team, a facebook or linkedin group, your twitter followers, etc.).</p> 
+          <p>Tips are sent to you by email. You can only reply to the tips you receive if the tipster left us their email address. Emails addresses are never shared with anyone (we proxy emails like Craigslist does).</p>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

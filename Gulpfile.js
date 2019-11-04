@@ -26,7 +26,9 @@ var NavigationBundler = browserify({
 });
 
 var TipboxAppBundle = function() {
-    return TipboxAppBundler.bundle()
+  return TipboxAppBundler
+        .ignore('sodium')
+        .bundle()
         .on('error', gutil.log.bind(gutil, 'Browserify Error'))
         .pipe(source('tipbox.compiled.js'))
         .pipe(buffer())
@@ -34,7 +36,6 @@ var TipboxAppBundle = function() {
         loadMaps: true
     }))
     // Add transformation tasks to the pipeline here.
-    .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('frontend/src/js/'))
     .on('end', function() {
@@ -51,7 +52,6 @@ var NavigationBundle = function() {
         loadMaps: true
     }))
     // Add transformation tasks to the pipeline here.
-    .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('frontend/src/js/'))
     .on('end', function() {
@@ -105,7 +105,7 @@ gulp.task('default', gulp.series('watch', 'less'));
 gulp.task('compile', gulp.series('browserify-app', 'browserify-nav'));
 
 gulp.task('copy', gulp.series('compile', function() {
-    gulp.src(filesToCopy, {
+    return gulp.src(filesToCopy, {
         base: './frontend/src/'
     })
     .pipe(gulp.dest('frontend/dist'));

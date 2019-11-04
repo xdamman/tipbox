@@ -1,2 +1,633 @@
-!function t(e,n,o){function i(r,a){if(!n[r]){if(!e[r]){var c="function"==typeof require&&require;if(!a&&c)return c(r,!0);if(s)return s(r,!0);var u=new Error("Cannot find module '"+r+"'");throw u.code="MODULE_NOT_FOUND",u}var l=n[r]={exports:{}};e[r][0].call(l.exports,function(t){var n=e[r][1][t];return i(n?n:t)},l,l.exports,t,e,n,o)}return n[r].exports}for(var s="function"==typeof require&&require,r=0;r<o.length;r++)i(o[r]);return i}({1:[function(t){var e=t("slideout");"tipbox.in"!=window.location.host||window.location.hash||(window.location.href="https://tipbox.is"),window.setCurrentView=function(t){var e,n=function(){return!(window&&window.crypto&&window.crypto.getRandomValues&&window.Uint8Array)},o=window.currentView||"homeView";t.match(/^#create/)?e="createView":t.match(/^#compose/)?(e="composeView",window.ComposeViewController&&window.ComposeViewController.init()):e="homeView","homeView"!=e&&n()&&(e="unsupportedBrowser"),document.querySelector("#"+o).classList.add("hidden"),document.querySelector("#"+e).classList.remove("hidden");var i=document.querySelector(".modal.active");return i&&s("#"+i.id),window.currentView=e,e},window.setCurrentView(window.location.hash),window.onhashchange=function(){window.setCurrentView(window.location.hash)};for(var n=document.querySelectorAll(".openModal"),o=0;o<n.length;o++){var i=n[o];i.addEventListener("click",function(t){return t.preventDefault(),s("#"+this.dataset.modal),!1})}var s=function(t){var e=document.querySelector(t);if(e.classList.contains("active"))return e.style.zIndex=0,e.classList.toggle("active");var n=document.querySelectorAll(".modal.active"),o=15;n.length>0&&(o=10*(n.length+1)),e.style.zIndex=o,e.classList.toggle("active")};window.slideout=new e({panel:document.getElementById("content"),menu:document.getElementById("menu"),side:"right"}),document.getElementById("open-menu").addEventListener("click",function(){slideout.toggle()})},{slideout:4}],2:[function(t,e){"use strict";function n(t,e,n){function i(t){a=t,s()}function s(){c||(o(r),c=!0)}function r(){n.call(t,a),c=!1}var a,c=!1;return t.addEventListener(e,i,!1),i}var o=function(){return window.requestAnimationFrame||window.webkitRequestAnimationFrame||function(t){window.setTimeout(t,1e3/60)}}();e.exports=n},{}],3:[function(t,e,n){"use strict";var o=function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")};n.__esModule=!0;var i=function(){function t(){o(this,t)}return t.prototype.on=function(t,e){return this._eventCollection=this._eventCollection||{},this._eventCollection[t]=this._eventCollection[t]||[],this._eventCollection[t].push(e),this},t.prototype.once=function(t,e){function n(){o.off(t,n),e.apply(this,arguments)}var o=this;return n.listener=e,this.on(t,n),this},t.prototype.off=function(t,e){var n=void 0;return this._eventCollection&&(n=this._eventCollection[t])?(n.forEach(function(t,o){(t===e||t.listener===e)&&n.splice(o,1)}),0===n.length&&delete this._eventCollection[t],this):this},t.prototype.emit=function(t){for(var e=this,n=arguments.length,o=Array(n>1?n-1:0),i=1;n>i;i++)o[i-1]=arguments[i];var s=void 0;return this._eventCollection&&(s=this._eventCollection[t])?(s=s.slice(0),s.forEach(function(t){return t.apply(e,o)}),this):this},t}();n["default"]=i,e.exports=n["default"]},{}],4:[function(t,e){"use strict";function n(t,e){for(var n in e)e[n]&&(t[n]=e[n]);return t}function o(t,e){t.prototype=n(t.prototype||{},e.prototype)}function i(t){t=t||{},this._startOffsetX=0,this._currentOffsetX=0,this._opening=!1,this._moved=!1,this._opened=!1,this._preventOpen=!1,this._touch=void 0===t.touch?!0:t.touch&&!0,this.panel=t.panel,this.menu=t.menu,-1===this.panel.className.search("slideout-panel")&&(this.panel.className+=" slideout-panel"),-1===this.menu.className.search("slideout-menu")&&(this.menu.className+=" slideout-menu"),this._fx=t.fx||"ease",this._duration=parseInt(t.duration,10)||300,this._tolerance=parseInt(t.tolerance,10)||70,this._padding=this._translateTo=parseInt(t.padding,10)||256,this._orientation="right"===t.side?-1:1,this._translateTo*=this._orientation,this._touch&&this._initTouchEvents()}var s,r=t("decouple"),a=t("emitter"),c=!1,u=window.document,l=u.documentElement,h=window.navigator.msPointerEnabled,p={start:h?"MSPointerDown":"touchstart",move:h?"MSPointerMove":"touchmove",end:h?"MSPointerUp":"touchend"},d=function(){var t=/^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/,e=u.getElementsByTagName("script")[0].style;for(var n in e)if(t.test(n))return"-"+n.match(t)[0].toLowerCase()+"-";return"WebkitOpacity"in e?"-webkit-":"KhtmlOpacity"in e?"-khtml-":""}();o(i,a),i.prototype.open=function(){var t=this;return this.emit("beforeopen"),-1===l.className.search("slideout-open")&&(l.className+=" slideout-open"),this._setTransition(),this._translateXTo(this._translateTo),this._opened=!0,setTimeout(function(){t.panel.style.transition=t.panel.style["-webkit-transition"]="",t.emit("open")},this._duration+50),this},i.prototype.close=function(){var t=this;return this.isOpen()||this._opening?(this.emit("beforeclose"),this._setTransition(),this._translateXTo(0),this._opened=!1,setTimeout(function(){l.className=l.className.replace(/ slideout-open/,""),t.panel.style.transition=t.panel.style["-webkit-transition"]=t.panel.style[d+"transform"]=t.panel.style.transform="",t.emit("close")},this._duration+50),this):this},i.prototype.toggle=function(){return this.isOpen()?this.close():this.open()},i.prototype.isOpen=function(){return this._opened},i.prototype._translateXTo=function(t){return this._currentOffsetX=t,this.panel.style[d+"transform"]=this.panel.style.transform="translateX("+t+"px)",this},i.prototype._setTransition=function(){return this.panel.style[d+"transition"]=this.panel.style.transition=d+"transform "+this._duration+"ms "+this._fx,this},i.prototype._initTouchEvents=function(){var t=this;return this._onScrollFn=r(u,"scroll",function(){t._moved||(clearTimeout(s),c=!0,s=setTimeout(function(){c=!1},250))}),this._preventMove=function(e){t._moved&&e.preventDefault()},u.addEventListener(p.move,this._preventMove),this._resetTouchFn=function(e){"undefined"!=typeof e.touches&&(t._moved=!1,t._opening=!1,t._startOffsetX=e.touches[0].pageX,t._preventOpen=!t._touch||!t.isOpen()&&0!==t.menu.clientWidth)},this.panel.addEventListener(p.start,this._resetTouchFn),this._onTouchCancelFn=function(){t._moved=!1,t._opening=!1},this.panel.addEventListener("touchcancel",this._onTouchCancelFn),this._onTouchEndFn=function(){t._moved&&(t.emit("translateend"),t._opening&&Math.abs(t._currentOffsetX)>t._tolerance?t.open():t.close()),t._moved=!1},this.panel.addEventListener(p.end,this._onTouchEndFn),this._onTouchMoveFn=function(e){if(!c&&!t._preventOpen&&"undefined"!=typeof e.touches){var n=e.touches[0].clientX-t._startOffsetX,o=t._currentOffsetX=n;if(!(Math.abs(o)>t._padding)&&Math.abs(n)>20){t._opening=!0;var i=n*t._orientation;if(t._opened&&i>0||!t._opened&&0>i)return;t._moved||t.emit("translatestart"),0>=i&&(o=n+t._padding*t._orientation,t._opening=!1),t._moved||-1!==l.className.search("slideout-open")||(l.className+=" slideout-open"),t.panel.style[d+"transform"]=t.panel.style.transform="translateX("+o+"px)",t.emit("translate",o),t._moved=!0}}},this.panel.addEventListener(p.move,this._onTouchMoveFn),this},i.prototype.enableTouch=function(){return this._touch=!0,this},i.prototype.disableTouch=function(){return this._touch=!1,this},i.prototype.destroy=function(){return this.close(),u.removeEventListener(p.move,this._preventMove),this.panel.removeEventListener(p.start,this._resetTouchFn),this.panel.removeEventListener("touchcancel",this._onTouchCancelFn),this.panel.removeEventListener(p.end,this._onTouchEndFn),this.panel.removeEventListener(p.move,this._onTouchMoveFn),u.removeEventListener("scroll",this._onScrollFn),this.open=this.close=function(){},this},e.exports=i},{decouple:2,emitter:3}]},{},[1]);
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+var Slideout = require('slideout');
+
+if(window.location.host == "tipbox.in" && !window.location.hash) {
+  window.location.href = "https://tipbox.is";
+}
+
+window.setCurrentView = function(hash) {
+
+  var unsupportedBrowser = function() {
+    return !(window && window.crypto && window.crypto.getRandomValues && window.Uint8Array);
+  }
+
+  var previousView = window.currentView || "homeView";
+  var currentView; 
+
+  if(hash.match(/^#create/)) {
+    currentView = 'createView';
+  } else if(hash.match(/^#compose/)) {
+    currentView = 'composeView';
+    if(window.ComposeViewController) window.ComposeViewController.init();
+  } else {
+    currentView = 'homeView';
+  }
+
+  if(currentView != "homeView" && unsupportedBrowser()) {
+    currentView = 'unsupportedBrowser'
+  }
+
+  document.querySelector('#'+previousView).classList.add('hidden');
+  document.querySelector('#'+currentView).classList.remove('hidden');
+
+  var activeModal = document.querySelector('.modal.active');
+  if(activeModal) toggleModal("#"+activeModal.id);
+
+  window.currentView = currentView;
+  return currentView;
+}
+
+window.setCurrentView(window.location.hash);
+
+// In case the hash changes before page.js is loaded
+// (once page.js is loaded, window.hashchange will be overridden)
+window.onhashchange = function() {
+  window.setCurrentView(window.location.hash);
+};
+
+var openModalEls = document.querySelectorAll('.openModal');
+for(var i=0;i<openModalEls.length; i++) {
+  var el = openModalEls[i];
+  el.addEventListener("click", function(e) {
+    e.preventDefault();
+    toggleModal('#'+this.dataset.modal);
+    return false;
+  });
+}
+
+var toggleModal = function(modalID) {
+  var modal = document.querySelector(modalID);
+
+  // Discarding currently active modal
+  if (modal.classList.contains('active')) {
+    modal.style.zIndex = 0;
+    return modal.classList.toggle('active');
+  }
+
+  var currentlyActive = document.querySelectorAll(".modal.active");
+  var zIndex = 15;
+
+  if(currentlyActive.length > 0)
+    zIndex = ( currentlyActive.length + 1 ) * 10;
+
+  modal.style.zIndex = zIndex;
+  modal.classList.toggle('active');
+}
+
+window.slideout = new Slideout({
+  'panel': document.getElementById('content'),
+  'menu': document.getElementById('menu'),
+  'side': 'right'
+});
+
+document.getElementById('open-menu').addEventListener('click', function() {
+  slideout.toggle();
+});
+
+},{"slideout":4}],2:[function(require,module,exports){
+'use strict';
+
+var requestAnimFrame = (function() {
+  return window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    function (callback) {
+      window.setTimeout(callback, 1000 / 60);
+    };
+}());
+
+function decouple(node, event, fn) {
+  var eve,
+      tracking = false;
+
+  function captureEvent(e) {
+    eve = e;
+    track();
+  }
+
+  function track() {
+    if (!tracking) {
+      requestAnimFrame(update);
+      tracking = true;
+    }
+  }
+
+  function update() {
+    fn.call(node, eve);
+    tracking = false;
+  }
+
+  node.addEventListener(event, captureEvent, false);
+
+  return captureEvent;
+}
+
+/**
+ * Expose decouple
+ */
+module.exports = decouple;
+
+},{}],3:[function(require,module,exports){
+"use strict";
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+exports.__esModule = true;
+/**
+ * Creates a new instance of Emitter.
+ * @class
+ * @returns {Object} Returns a new instance of Emitter.
+ * @example
+ * // Creates a new instance of Emitter.
+ * var Emitter = require('emitter');
+ *
+ * var emitter = new Emitter();
+ */
+
+var Emitter = (function () {
+  function Emitter() {
+    _classCallCheck(this, Emitter);
+  }
+
+  /**
+   * Adds a listener to the collection for the specified event.
+   * @memberof! Emitter.prototype
+   * @function
+   * @param {String} event - The event name.
+   * @param {Function} listener - A listener function to add.
+   * @returns {Object} Returns an instance of Emitter.
+   * @example
+   * // Add an event listener to "foo" event.
+   * emitter.on('foo', listener);
+   */
+
+  Emitter.prototype.on = function on(event, listener) {
+    // Use the current collection or create it.
+    this._eventCollection = this._eventCollection || {};
+
+    // Use the current collection of an event or create it.
+    this._eventCollection[event] = this._eventCollection[event] || [];
+
+    // Appends the listener into the collection of the given event
+    this._eventCollection[event].push(listener);
+
+    return this;
+  };
+
+  /**
+   * Adds a listener to the collection for the specified event that will be called only once.
+   * @memberof! Emitter.prototype
+   * @function
+   * @param {String} event - The event name.
+   * @param {Function} listener - A listener function to add.
+   * @returns {Object} Returns an instance of Emitter.
+   * @example
+   * // Will add an event handler to "foo" event once.
+   * emitter.once('foo', listener);
+   */
+
+  Emitter.prototype.once = function once(event, listener) {
+    var self = this;
+
+    function fn() {
+      self.off(event, fn);
+      listener.apply(this, arguments);
+    }
+
+    fn.listener = listener;
+
+    this.on(event, fn);
+
+    return this;
+  };
+
+  /**
+   * Removes a listener from the collection for the specified event.
+   * @memberof! Emitter.prototype
+   * @function
+   * @param {String} event - The event name.
+   * @param {Function} listener - A listener function to remove.
+   * @returns {Object} Returns an instance of Emitter.
+   * @example
+   * // Remove a given listener.
+   * emitter.off('foo', listener);
+   */
+
+  Emitter.prototype.off = function off(event, listener) {
+
+    var listeners = undefined;
+
+    // Defines listeners value.
+    if (!this._eventCollection || !(listeners = this._eventCollection[event])) {
+      return this;
+    }
+
+    listeners.forEach(function (fn, i) {
+      if (fn === listener || fn.listener === listener) {
+        // Removes the given listener.
+        listeners.splice(i, 1);
+      }
+    });
+
+    // Removes an empty event collection.
+    if (listeners.length === 0) {
+      delete this._eventCollection[event];
+    }
+
+    return this;
+  };
+
+  /**
+   * Execute each item in the listener collection in order with the specified data.
+   * @memberof! Emitter.prototype
+   * @function
+   * @param {String} event - The name of the event you want to emit.
+   * @param {...Object} data - Data to pass to the listeners.
+   * @returns {Object} Returns an instance of Emitter.
+   * @example
+   * // Emits the "foo" event with 'param1' and 'param2' as arguments.
+   * emitter.emit('foo', 'param1', 'param2');
+   */
+
+  Emitter.prototype.emit = function emit(event) {
+    var _this = this;
+
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var listeners = undefined;
+
+    // Defines listeners value.
+    if (!this._eventCollection || !(listeners = this._eventCollection[event])) {
+      return this;
+    }
+
+    // Clone listeners
+    listeners = listeners.slice(0);
+
+    listeners.forEach(function (fn) {
+      return fn.apply(_this, args);
+    });
+
+    return this;
+  };
+
+  return Emitter;
+})();
+
+/**
+ * Exports Emitter
+ */
+exports["default"] = Emitter;
+module.exports = exports["default"];
+},{}],4:[function(require,module,exports){
+'use strict';
+
+/**
+ * Module dependencies
+ */
+var decouple = require('decouple');
+var Emitter = require('emitter');
+
+/**
+ * Privates
+ */
+var scrollTimeout;
+var scrolling = false;
+var doc = window.document;
+var html = doc.documentElement;
+var msPointerSupported = window.navigator.msPointerEnabled;
+var touch = {
+  'start': msPointerSupported ? 'MSPointerDown' : 'touchstart',
+  'move': msPointerSupported ? 'MSPointerMove' : 'touchmove',
+  'end': msPointerSupported ? 'MSPointerUp' : 'touchend'
+};
+var prefix = (function prefix() {
+  var regex = /^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;
+  var styleDeclaration = doc.getElementsByTagName('script')[0].style;
+  for (var prop in styleDeclaration) {
+    if (regex.test(prop)) {
+      return '-' + prop.match(regex)[0].toLowerCase() + '-';
+    }
+  }
+  // Nothing found so far? Webkit does not enumerate over the CSS properties of the style object.
+  // However (prop in style) returns the correct value, so we'll have to test for
+  // the precence of a specific property
+  if ('WebkitOpacity' in styleDeclaration) { return '-webkit-'; }
+  if ('KhtmlOpacity' in styleDeclaration) { return '-khtml-'; }
+  return '';
+}());
+function extend(destination, from) {
+  for (var prop in from) {
+    if (from[prop]) {
+      destination[prop] = from[prop];
+    }
+  }
+  return destination;
+}
+function inherits(child, uber) {
+  child.prototype = extend(child.prototype || {}, uber.prototype);
+}
+function hasIgnoredElements(el) {
+  while (el.parentNode) {
+    if (el.getAttribute('data-slideout-ignore') !== null) {
+      return el;
+    }
+    el = el.parentNode;
+  }
+  return null;
+}
+
+/**
+ * Slideout constructor
+ */
+function Slideout(options) {
+  options = options || {};
+
+  // Sets default values
+  this._startOffsetX = 0;
+  this._currentOffsetX = 0;
+  this._opening = false;
+  this._moved = false;
+  this._opened = false;
+  this._preventOpen = false;
+  this._touch = options.touch === undefined ? true : options.touch && true;
+  this._side = options.side || 'left';
+
+  // Sets panel
+  this.panel = options.panel;
+  this.menu = options.menu;
+
+  // Sets  classnames
+  if (!this.panel.classList.contains('slideout-panel')) {
+    this.panel.classList.add('slideout-panel');
+  }
+  if (!this.panel.classList.contains('slideout-panel-' + this._side)) {
+    this.panel.classList.add('slideout-panel-' + this._side);
+  }
+  if (!this.menu.classList.contains('slideout-menu')) {
+    this.menu.classList.add('slideout-menu');
+  }
+  if (!this.menu.classList.contains('slideout-menu-' + this._side)) {
+    this.menu.classList.add('slideout-menu-' + this._side);
+  }
+
+  // Sets options
+  this._fx = options.fx || 'ease';
+  this._duration = parseInt(options.duration, 10) || 300;
+  this._tolerance = parseInt(options.tolerance, 10) || 70;
+  this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
+  this._orientation = this._side === 'right' ? -1 : 1;
+  this._translateTo *= this._orientation;
+
+  // Init touch events
+  if (this._touch) {
+    this._initTouchEvents();
+  }
+}
+
+/**
+ * Inherits from Emitter
+ */
+inherits(Slideout, Emitter);
+
+/**
+ * Opens the slideout menu.
+ */
+Slideout.prototype.open = function() {
+  var self = this;
+  this.emit('beforeopen');
+  if (!html.classList.contains('slideout-open')) {
+    html.classList.add('slideout-open');
+  }
+  this._setTransition();
+  this._translateXTo(this._translateTo);
+  this._opened = true;
+  setTimeout(function() {
+    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
+    self.emit('open');
+  }, this._duration + 50);
+  return this;
+};
+
+/**
+ * Closes slideout menu.
+ */
+Slideout.prototype.close = function() {
+  var self = this;
+  if (!this.isOpen() && !this._opening) {
+    return this;
+  }
+  this.emit('beforeclose');
+  this._setTransition();
+  this._translateXTo(0);
+  this._opened = false;
+  setTimeout(function() {
+    html.classList.remove('slideout-open');
+    self.panel.style.transition = self.panel.style['-webkit-transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
+    self.emit('close');
+  }, this._duration + 50);
+  return this;
+};
+
+/**
+ * Toggles (open/close) slideout menu.
+ */
+Slideout.prototype.toggle = function() {
+  return this.isOpen() ? this.close() : this.open();
+};
+
+/**
+ * Returns true if the slideout is currently open, and false if it is closed.
+ */
+Slideout.prototype.isOpen = function() {
+  return this._opened;
+};
+
+/**
+ * Translates panel and updates currentOffset with a given X point
+ */
+Slideout.prototype._translateXTo = function(translateX) {
+  this._currentOffsetX = translateX;
+  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
+  return this;
+};
+
+/**
+ * Set transition properties
+ */
+Slideout.prototype._setTransition = function() {
+  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
+  return this;
+};
+
+/**
+ * Initializes touch event
+ */
+Slideout.prototype._initTouchEvents = function() {
+  var self = this;
+
+  /**
+   * Decouple scroll event
+   */
+  this._onScrollFn = decouple(doc, 'scroll', function() {
+    if (!self._moved) {
+      clearTimeout(scrollTimeout);
+      scrolling = true;
+      scrollTimeout = setTimeout(function() {
+        scrolling = false;
+      }, 250);
+    }
+  });
+
+  /**
+   * Prevents touchmove event if slideout is moving
+   */
+  this._preventMove = function(eve) {
+    if (self._moved) {
+      eve.preventDefault();
+    }
+  };
+
+  doc.addEventListener(touch.move, this._preventMove);
+
+  /**
+   * Resets values on touchstart
+   */
+  this._resetTouchFn = function(eve) {
+    if (typeof eve.touches === 'undefined') {
+      return;
+    }
+
+    self._moved = false;
+    self._opening = false;
+    self._startOffsetX = eve.touches[0].pageX;
+    self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
+  };
+
+  this.panel.addEventListener(touch.start, this._resetTouchFn);
+
+  /**
+   * Resets values on touchcancel
+   */
+  this._onTouchCancelFn = function() {
+    self._moved = false;
+    self._opening = false;
+  };
+
+  this.panel.addEventListener('touchcancel', this._onTouchCancelFn);
+
+  /**
+   * Toggles slideout on touchend
+   */
+  this._onTouchEndFn = function() {
+    if (self._moved) {
+      self.emit('translateend');
+      (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
+    }
+    self._moved = false;
+  };
+
+  this.panel.addEventListener(touch.end, this._onTouchEndFn);
+
+  /**
+   * Translates panel on touchmove
+   */
+  this._onTouchMoveFn = function(eve) {
+    if (
+      scrolling ||
+      self._preventOpen ||
+      typeof eve.touches === 'undefined' ||
+      hasIgnoredElements(eve.target)
+    ) {
+      return;
+    }
+
+    var dif_x = eve.touches[0].clientX - self._startOffsetX;
+    var translateX = self._currentOffsetX = dif_x;
+
+    if (Math.abs(translateX) > self._padding) {
+      return;
+    }
+
+    if (Math.abs(dif_x) > 20) {
+
+      self._opening = true;
+
+      var oriented_dif_x = dif_x * self._orientation;
+
+      if (self._opened && oriented_dif_x > 0 || !self._opened && oriented_dif_x < 0) {
+        return;
+      }
+
+      if (!self._moved) {
+        self.emit('translatestart');
+      }
+
+      if (oriented_dif_x <= 0) {
+        translateX = dif_x + self._padding * self._orientation;
+        self._opening = false;
+      }
+
+      if (!(self._moved && html.classList.contains('slideout-open'))) {
+        html.classList.add('slideout-open');
+      }
+
+      self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + 'px)';
+      self.emit('translate', translateX);
+      self._moved = true;
+    }
+
+  };
+
+  this.panel.addEventListener(touch.move, this._onTouchMoveFn);
+
+  return this;
+};
+
+/**
+ * Enable opening the slideout via touch events.
+ */
+Slideout.prototype.enableTouch = function() {
+  this._touch = true;
+  return this;
+};
+
+/**
+ * Disable opening the slideout via touch events.
+ */
+Slideout.prototype.disableTouch = function() {
+  this._touch = false;
+  return this;
+};
+
+/**
+ * Destroy an instance of slideout.
+ */
+Slideout.prototype.destroy = function() {
+  // Close before clean
+  this.close();
+
+  // Remove event listeners
+  doc.removeEventListener(touch.move, this._preventMove);
+  this.panel.removeEventListener(touch.start, this._resetTouchFn);
+  this.panel.removeEventListener('touchcancel', this._onTouchCancelFn);
+  this.panel.removeEventListener(touch.end, this._onTouchEndFn);
+  this.panel.removeEventListener(touch.move, this._onTouchMoveFn);
+  doc.removeEventListener('scroll', this._onScrollFn);
+
+  // Remove methods
+  this.open = this.close = function() {};
+
+  // Return the instance so it can be easily dereferenced
+  return this;
+};
+
+/**
+ * Expose Slideout
+ */
+module.exports = Slideout;
+
+},{"decouple":2,"emitter":3}]},{},[1])
+
 //# sourceMappingURL=navigation.compiled.js.map
