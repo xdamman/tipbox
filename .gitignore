@@ -1,1 +1,5 @@
 node_modules
+
+*.js.map
+*.compiled.js
+frontend/src/css
