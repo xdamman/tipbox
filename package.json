@@ -4,7 +4,7 @@
   "description": "Collect anonymous feedback & tips from the communities you want.",
   "main": "index.js",
   "engines": {
-    "node": ">12"
+    "node": "13.x"
   },
   "scripts": {
     "start": "node server",
