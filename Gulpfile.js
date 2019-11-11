@@ -6,7 +6,6 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     cleanCSS = require('gulp-clean-css');
     mold = require('mold-source-map'),
-    uglify = require('gulp-uglify'),
     rename = require("gulp-rename"),
     sourcemaps = require('gulp-sourcemaps'),
     less = require('gulp-less'),
