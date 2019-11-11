@@ -58,13 +58,13 @@ window.ComposeViewController = (function() {
     else {
       tip = new Tip(options);
     }
-  }
 
-  $sendBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    tip.send();
-    return false;
-  });
+    $sendBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      tip.send();
+      return false;
+    });
+  }
 
   init();
 

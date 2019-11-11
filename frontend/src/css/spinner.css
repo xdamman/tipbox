@@ -107,6 +107,14 @@
   animation-delay: 1.3s;
   transform: rotate(-135deg);
 }
+@-webkit-keyframes fadeG {
+  0% {
+    background-color: #000000;
+  }
+  100% {
+    background-color: #FFFFFF;
+  }
+}
 @keyframes fadeG {
   0% {
     background-color: #000000;

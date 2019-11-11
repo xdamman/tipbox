@@ -11,7 +11,7 @@ Try it at https://tipbox.is
 - Support for photo/document upload.
 - Stateless, no logs in production (no information is ever saved).
 - Unique information about the Tipbox is in the hash of the URL so that no one can tell who opened a particular Tipbox by monitoring the network traffic.
-- PGP encryption between the frontend and the backend so that men-in-the-middle can't read the content of the requests sent to the backend.
+- PGP encryption between the frontend and the backend so reduce the risk of leaking information between a reverse-proxy and the backend.
 - Support for End-To-End encryption with PGP.
 - Automatically fetches the PGP key of the recipient from public key servers at the creation of the tipbox if one exists (you need to manually verify and select it to avoid spoofing).
 
@@ -57,6 +57,12 @@ During the private beta, an invitation code is required to create a tipbox.
 You can generate one with the following command line:
 
     NODE_ENV=production PGP_PASSPHRASE=1234 HMAC_KEY=[HMAC_KEY of the server] node invite.js [email address]
+
+## Docker
+
+        docker build . -t tipbox/server
+        docker run --rm -it -v $(pwd)/keys:/app/keys tipbox/server bash -c 'PASSPHRASE=1234 IDENTITY="<tips@your-domain.org>" node ./server/utils/keygen.js'
+        docker run --rm -it -p 3000:3000 -e PASSPHRASE=1234 -e HOST=your-domain.org -v $(pwd)/keys:/app/keys tipbox/server yarn start
 
 ## Frontend tests with Nightwatch
 

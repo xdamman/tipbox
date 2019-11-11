@@ -102,7 +102,7 @@ gulp.task('minify-css', gulp.series('less', function() {
 }));
 
 gulp.task('default', gulp.series('watch', 'less'));
-gulp.task('compile', gulp.series('browserify-app', 'browserify-nav'));
+gulp.task('compile', gulp.series('browserify-app', 'browserify-nav', 'minify-css'));
 
 gulp.task('copy', gulp.series('compile', function() {
     return gulp.src(filesToCopy, {

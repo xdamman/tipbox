@@ -10,7 +10,7 @@ module.exports = function(app) {
   return {
 
     index: function(req, res, next) {
-      var email = req.param('email');
+      var email = req.param.email
       if(memoryCache['index/'+email]) return res.send(memoryCache['index/'+email]);
       /* search keys with exact match */
       pgpsearch.index(email, function(err, keys) {
