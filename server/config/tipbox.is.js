@@ -22,7 +22,7 @@ module.exports = function(app) {
     } else {
       app.set('protocol', 'https');
     }
-    app.set('host', req.hostname);
+    app.set('host', process.env.HOST_DOMAIN || req.hostname);
     next();
   });
 

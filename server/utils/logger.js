@@ -28,6 +28,10 @@ function setup() {
   sLogger = new winston.createLogger({
     levels: logLevels.levels,
     level: logLevel,
+    format: winston.format.combine(
+      winston.format.splat(),
+      winston.format.simple(),
+    ),
     transports: [
       new (winston.transports.Console)()
     ]

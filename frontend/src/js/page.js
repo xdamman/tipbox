@@ -1,8 +1,6 @@
 /**
  * Page switcher
  */
-var Donate = require('./donate');
-var Transaction = require('./transaction');
 
 module.exports = function() {
   'use strict';
@@ -22,14 +20,6 @@ module.exports = function() {
     'security': {
       type: 'text-page',
       init: null
-    },
-    'donate': {
-      type: 'donation-page',
-      init: Donate.init
-    },
-    'transactions': {
-      type: 'transaction-page',
-      init: Transaction.init
     },
     'tos': {
       type: 'text-page',

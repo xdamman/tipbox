@@ -6,7 +6,7 @@ var logger = require('../utils/logger').instance()
 module.exports = function(app) {
   app.set('staticMaxAge', 0);
   app.set('protocol', 'http');
-  app.set('host', host+':'+port);
+  app.set('host', process.env.HOST_DOMAIN || host + ':' + port);
   app.use(function(req, res, next) {
     logger.info('%s %s %s', req.method, req.url, req.path);
     next();

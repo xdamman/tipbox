@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>About Tipbox</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="/dist/css/newtip.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <header class="bar bar-nav">
+      <div class="inner">
+        <a class="icon icon-left-nav pull-left" href="newtip.html" data-transition="slide-out"></a>
+        <h1 class="title">About Tipbox</h1>
+      </div>
+    </header>
+
+    <div class="content">
+
+        <div class="thankyou">
+          <img src="/img/tipbox.jpg" class="rounded" />
+        </div>
+
+        <div class="content-padded">
+          <p>Tipbox is a private inbox to receive anonymous tips.</p>
+          <p>Tips are encryted using PGP on the client side, once with the Tipbox private key, and a second time with the recipient's PGP key if one exists.</p>
+          <p>The encrypted message is then sent over a secure channel using HTTPS to our server, which takes care of sending the email over a secure channel to the recipient's email address.</p>
+          <p>We don't keep any logs in the process and we don't store any data. Only the recipient gets the email.</p>
+        </div>
+
+
+    </div>
+
+  <script src="/lib/ratchet/js/ratchet.js"></script>
+
+  <script>if(window.location.port) document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+
+  </body>
+</html>

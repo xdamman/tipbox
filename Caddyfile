@@ -1,0 +1,8 @@
+http://tipbox.d.mdp.im {
+  root /root
+  gzip
+  proxy / server:3000 {
+    transparent
+  }
+}
+

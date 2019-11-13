@@ -103,10 +103,6 @@ var Api = function(options) {
       });
     },
 
-    donate: function(data, fn) {
-      request('/api/payments', data, fn);
-    }
-
   };
 
   this.tip = {

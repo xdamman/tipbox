@@ -1,0 +1,27 @@
+version: '3'
+services:
+  server:
+    build: .
+    env_file:
+     - .env
+    depends_on:
+      - smtp
+    volumes:
+      - "./data/keys:/app/keys"
+
+  smtp:
+    image: namshi/smtp
+    env_file:
+     - .env
+
+  caddy:
+    image: abiosoft/caddy:no-stats
+    ports:
+      - "443:443"
+      - "80:80"
+    env_file:
+      - .env
+    volumes:
+      - "./Caddyfile:/etc/Caddyfile"
+      - "./data/caddy:/root/.caddy
+

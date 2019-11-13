@@ -3,10 +3,21 @@ var middlewares = require('./middlewares');
 
 module.exports = function(app) {
 
-  // We make sure the page can't load anything from another host
   app.use(function(req, res, next) {
-    var host = app.set('protocol')+'://'+app.set('host');
-    res.setHeader("Content-Security-Policy","default-src 'none'; script-src "+host+" https://js.stripe.com/ https://api.stripe.com 'unsafe-eval'; style-src "+host+"; media-src "+host+"; img-src "+host+" data:; font-src "+host+"; connect-src "+host+" https://keybase.io; frame-src https://js.stripe.com/v2/");
+
+    // Default to the request protocol and hostName as the origin
+    var protocol = req.protocol // Allow for nonSSL for cases like tor
+    var host = app.config.setting.domain || req.get('host')
+    var origin = protocol + '://' + host
+
+    // Let us override this in certain cases
+    if (app.config.settings.origin) {
+      origin = app.config.settings.origin
+    }
+
+    // Enforce a strong CSP Policy
+    res.setHeader("Content-Security-Policy","default-src 'none'; script-src "+origin+"; style-src "+origin+"; media-src "+origin+"; img-src "+origin+" data:; font-src "+origin+" data:; connect-src "+origin+" https://keybase.io;");
+
     next();
   });
 
@@ -20,8 +31,4 @@ module.exports = function(app) {
   app.post('/api/pgp/search', app.controllers.pgp.index);
   app.post('/api/pgp/get', app.controllers.pgp.get);
   app.get('/api/stats', app.controllers.stats.get);
-
-  app.get('/api/*', app.controllers.donate.api);
-  app.post('/api/payments', app.controllers.donate.makeDonation);
-
 }
