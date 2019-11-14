@@ -1,5 +1,10 @@
 version: '3'
 services:
+  smtp:
+    image: namshi/smtp
+    env_file:
+     - .env
+
   server:
     build: .
     env_file:
@@ -8,17 +13,16 @@ services:
       - smtp
     volumes:
       - ".:/app"
-
-  smtp:
-    image: namshi/smtp
-    env_file:
-     - .env
+    expose:
+      - "3000"
 
   caddy:
     image: abiosoft/caddy:no-stats
     ports:
       - "443:443"
       - "80:80"
+    depends_on:
+      - server
     env_file:
       - .env
     volumes:

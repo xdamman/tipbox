@@ -10,7 +10,7 @@ kbpgp.KeyManager.generate_ecc({ userid : process.env.IDENTITY }, function(err, t
       fs.writeFileSync(keysDir + '/public.key', str);
       fs.writeFileSync(keysDir + '/public.key.json', JSON.stringify(str));
     })
-    tbKey.export_pgp_private({passphrase: process.env.PASSPHRASE}, function(err, str){
+    tbKey.export_pgp_private({passphrase: process.env.PGP_PASSPHRASE}, function(err, str){
       fs.writeFileSync(keysDir + '/private.key', str);
     })
   });

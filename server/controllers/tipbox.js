@@ -27,7 +27,7 @@ module.exports = function(app) {
       var fingerprint = req.body.fingerprint || '';
       var hashBase = req.body.recipient + req.body.subject + fingerprint;
       sig = crypto.createHmac('sha1', settings.hmacKey || '').update(hashBase).digest('hex');
-      url = app.set('protocol')+'://'+app.set('host');
+      url = settings.origin;
       url = url + '#compose/' + escape(req.body.recipient) + '/' +
         escape(req.body.subject) + '/' + fingerprint + '/' + sig;
 
@@ -35,7 +35,7 @@ module.exports = function(app) {
       var protip = "Share this unique URL in your Twitter Bio or in your email signature to let people know how they can reach you anonymously.\n\n#Protip: You can create multiple Tipbox as long as the subject is different. That way, you can share a unique URL to a specific community (by posting it in a forum or LinkedIn group, or in a Facebook ad) and you will know for sure that the tips with that specific subject line come from people from that particular community.";
 
       var data = {
-        from: 'Tipbox <tipbox@'+settings.hostDomain+'>',
+        from: 'Tipbox <tipbox@'+settings.domain+'>',
         to: req.body.recipient,
         subject: 'Here\'s your new Tipbox',
         text: 'Here is the URL for your new Tipbox: \n' + url + '\n\n' + protip

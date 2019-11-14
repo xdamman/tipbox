@@ -1,4 +1,4 @@
-http://tipbox.d.mdp.im {
+{$DOMAIN} {
   root /root
   gzip
   proxy / server:3000 {

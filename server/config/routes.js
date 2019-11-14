@@ -7,7 +7,7 @@ module.exports = function(app) {
 
     // Default to the request protocol and hostName as the origin
     var protocol = req.protocol // Allow for nonSSL for cases like tor
-    var host = app.config.setting.domain || req.get('host')
+    var host = app.config.settings.domain || req.get('host')
     var origin = protocol + '://' + host
 
     // Let us override this in certain cases

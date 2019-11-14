@@ -21,7 +21,7 @@ module.exports = function(app) {
 
         data = {
           to: req.body.recipient,
-          from: '<tipbox@'+settings.hostDomain+'>',
+          from: '<tipbox@'+settings.domain+'>',
           message: req.body.mime
         };
 
