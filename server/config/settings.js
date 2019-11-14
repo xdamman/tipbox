@@ -1,6 +1,6 @@
 var fs = require('fs');
 var env = process.env;
-var keysDir = process.KEYS_DIR || __dirname + '/../../keys';
+var keysDir = process.KEYS_DIR || __dirname + '/../../data/keys';
 
 var defaults = {
       'env': env.NODE_ENV,

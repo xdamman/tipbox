@@ -4,7 +4,7 @@ var page = require('./page')();
 var TipboxApi = require('./api');
 var Tip = require('./tip');
 var utils = require('./utils');
-var server_pgp = require('../../../keys/public.key.json');
+var server_pgp = require('../../../data/keys/public.key.json');
 
 var api = new TipboxApi({pgp: server_pgp});
 

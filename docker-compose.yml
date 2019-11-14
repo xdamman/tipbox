@@ -7,7 +7,7 @@ services:
     depends_on:
       - smtp
     volumes:
-      - "./data/keys:/app/keys"
+      - ".:/app"
 
   smtp:
     image: namshi/smtp
@@ -23,5 +23,5 @@ services:
       - .env
     volumes:
       - "./Caddyfile:/etc/Caddyfile"
-      - "./data/caddy:/root/.caddy
+      - "./data/caddy:/root/.caddy"
 

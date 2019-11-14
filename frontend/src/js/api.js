@@ -96,13 +96,6 @@ var Api = function(options) {
       });
     },
 
-    transactions: function(fn) {
-      r.get('/api/transactions', function(error, response) {
-        if(error) return fn(error);
-        return fn(null, response);
-      });
-    },
-
   };
 
   this.tip = {
