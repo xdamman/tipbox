@@ -10,6 +10,7 @@ var defaults = {
   'pgpPrivateKey': fs.readFileSync(keysDir + '/private.key', 'utf-8'),
   'pgpPublicKey': fs.readFileSync(keysDir + '/public.key', 'utf-8'),
   'pgpKeyPassphrase': env.PGP_PASSPHRASE,
+  'hmacKey': env.HMAC_KEY,
   'domain': DOMAIN,
   // This is the web host, and inclues a protocol. You may need to
   // override it if you're using something Tor and therefore no ssl(HTTP)

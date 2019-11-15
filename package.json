@@ -9,12 +9,8 @@
   "scripts": {
     "start": "node server",
     "build": "gulp build",
-    "dev": "gulp watch & PGP_PASSPHRASE=1234 node-dev server",
-    "staging": "gulp build && NODE_ENV=staging npm start",
-    "tipbox.in": "gulp build && NODE_ENV=tipbox.in npm start",
-    "tipbox.is": "gulp build && NODE_ENV=tipbox.is npm start",
-    "deploy": "gulp build && git push heroku",
-    "postinstall": "node node_modules/.bin/gulp build && opencollective postinstall",
+    "dev": "gulp watch & node-dev server",
+    "postinstall": "opencollective postinstall",
     "clean": "git branch --merged master | grep -v 'master$' | xargs git branch -d 2>/dev/null && exit 1",
     "test": "./node_modules/.bin/nightwatch -c test/nightwatch.json"
   },

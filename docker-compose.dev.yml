@@ -4,8 +4,6 @@ services:
     image: namshi/smtp
     env_file:
      - .env
-    logging:
-      driver: none # SMTP docker image is very verbose, prevent all logging
 
   server:
     build: .

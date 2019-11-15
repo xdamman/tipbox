@@ -4,5 +4,8 @@
   proxy / server:3000 {
     transparent
   }
+  log {
+    except /
+  }
 }
 
