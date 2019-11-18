@@ -14,7 +14,8 @@ services:
     depends_on:
       - smtp
     volumes:
-      - ".:/app"
+      - "./data:/app/data"
+      - "./frontend/dist:/app/frontend/dist"
     expose:
       - "3000"
 

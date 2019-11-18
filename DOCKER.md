@@ -4,6 +4,7 @@ Steps to use Docker/docker-compose to run your own tipbox
 1. Build the image and create a new PGP key
   - docker-compose build server
   - docker-compose run --rm server node ./server/utils/keygen.js
+  - docker-compose run --rm server yarn build
 1. Run all the services
   - `docker-compose up -d`
 
