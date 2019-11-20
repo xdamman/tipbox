@@ -36,10 +36,12 @@ var Queue = function() {
     this.length++;
     this.lastId = id;
 
-    logger.info("jobs> Adding a new job (id: "+id+"). Total jobs: ", this.length);
 
     var delay = delay || 1000*15;
+
+    logger.info("jobs> Adding a new job (id: "+id+") with delay of "+ delay + "ms. Total jobs: ", this.length);
     setTimeout(function(id) {
+      logger.info("jobs> Running job (id: "+id+")");
       self.run(id);
     }, delay, id);
 

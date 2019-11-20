@@ -15,22 +15,22 @@ var defaults = {
   // This is the web host, and inclues a protocol. You may need to
   // override it if you're using something Tor and therefore no ssl(HTTP)
   'origin': ORIGIN,
-  'logLevel': 'error'
+  'logLevel': 'error',
+
+  // Mail settings
+  'smtpHost': env.SMTP_HOST,
+  'smtpPort': env.SMTP_PORT,
+
+  // If you're using an external SMTP provider
+  'mailgunApiKey': env.MAILGUN_API_KEY,
+  'mailgunDomain': env.MAILGUN_DOMAIN || 'tipbox.dev',
 };
 
 var settings = {
   'development': {
-    'mailgunApiKey': env.MAILGUN_API_KEY,
-    'mailgunDomain': env.MAILGUN_DOMAIN || 'tipbox.dev',
-    'smtpHost': env.SMTP_HOST,
-    'smtpPort': env.SMTP_PORT,
     'logLevel': 'debug'
   },
   'production': {
-    'mailgunApiKey': env.MAILGUN_API_KEY,
-    'mailgunDomain': env.MAILGUN_DOMAIN || 'tipbox.dev',
-    'smtpHost': env.SMTP_HOST,
-    'smtpPort': env.SMTP_PORT,
     'logLevel': 'error'
   }
 };
@@ -39,5 +39,10 @@ module.exports = function(name) {
   var props = {};
   for (var key in defaults) { props[key] = defaults[key]; }
   for (var key in settings[name]) { props[key] = settings[name][key]; }
+
+  if (env.NODE_ENV === 'development') {
+    console.log('Settings:', props)
+  }
+
   return props;
 }

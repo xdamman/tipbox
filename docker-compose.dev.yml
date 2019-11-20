@@ -3,16 +3,17 @@ services:
   smtp:
     image: namshi/smtp
     env_file:
-     - .env
+      - .env.dev
 
   server:
     build: .
     env_file:
-     - .env
+      - .env.dev
     depends_on:
       - smtp
     volumes:
-      - ".:/app"
+      - "./data:/app/data"
+      - "./frontend/src:/app/frontend/src"
     expose:
       - "3000"
 
@@ -24,7 +25,7 @@ services:
     depends_on:
       - server
     env_file:
-      - .env
+      - .env.dev
     volumes:
       - "./Caddyfile:/etc/Caddyfile"
       - "./data/caddy:/root/.caddy"

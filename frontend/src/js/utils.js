@@ -117,6 +117,7 @@ var utils = {
   getPGPMIME: function(from, subject, body, attachment, pgp_key, cb) {
 
     var mime = utils.getMIME(from, subject, body, attachment);
+    var hostname = window.location.hostname;
 
     if(!pgp_key) {
       return cb(null, mime);
@@ -131,7 +132,7 @@ var utils = {
 
       var delimiter = Math.round(Math.random() * 100000000000);
       var mime = "MIME-Version: 1.0\nContent-Type: multipart/encrypted; protocol=\"application/pgp-encrypted\"; boundary=\""+delimiter+"\"\n";
-      mime += "From: =?utf-8?Q?=F0=9F=91=A4?= "+from+" via Tipbox <tipbox@tipbox.is>\n";
+      mime += "From: =?utf-8?Q?=F0=9F=91=A4?= "+from+" via Tipbox <tipbox@"+hostname+">\n";
       mime += "Subject: =?utf-8?B?8J+Ukg==?= "+subject+"\n";
       mime += "\n";
       mime += "This is an OpenPGP/MIME encrypted message (RFC 4880 and 3156)\n";

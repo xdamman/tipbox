@@ -21,17 +21,17 @@ module.exports = function(app) {
 
         data = {
           to: req.body.recipient,
-          from: '<tipbox@'+settings.domain+'>',
+          from: 'tipbox@'+settings.domain,
+          subject: req.body.subject,
           message: req.body.mime
         };
 
         if (settings.env === 'development') {
-          delay = 10*1000; // Delaying job execution by 10s
+          delay = 3*1000; // Delaying job execution by 3s
           job = new Job(function(data, fn) {
             mailer.sendMime(data, function (error, body) {
                 fn(error, body);
             });
-            fn();
             counter.incrCounter('tip');
           }, data);
 
