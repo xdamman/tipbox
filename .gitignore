@@ -6,6 +6,7 @@ frontend/src/css
 frontend/dist
 data/caddy/*
 data/keys/*
+data/*.cnt
 
 !data/caddy/.gitkeep 
 !data/keys/.gitkeep 

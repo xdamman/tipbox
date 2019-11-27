@@ -122,12 +122,11 @@ var CreateViewController = (function() {
 
   var Key = function(key) {
     this.fingerprint = key.fingerprint;
-    this.date = key.date;
-    this.bits = key.bits;
+    this.source = key.source;
   }
 
   Key.prototype.toString = function() {
-    return "0x"+this.fingerprint.substr(32)+" ("+this.date.slice(0,-5).replace('T',' ')+")";
+    return "0x"+this.fingerprint.substr(32)+" ("+this.source+")";
   }
 
   var selectedKey = null;

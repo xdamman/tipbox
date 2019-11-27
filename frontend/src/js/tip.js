@@ -22,7 +22,7 @@ module.exports = function(options) {
 
       self.pgp_key = public_key;
       var fingerprint = public_key.get_pgp_fingerprint().toString('hex').toUpperCase();
-      if(fingerprint != self.fingerprint) {
+      if(fingerprint.toUpperCase() != self.fingerprint.toUpperCase()) {
         // This should never happen
         console.error("Invalid fingerprint");
         self.fingerprint = fingerprint;
