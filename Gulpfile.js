@@ -9,10 +9,10 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     less = require('gulp-less'),
     path = require('path'),
-    hashstream = require('inline-csp-hash'),
+    sriHash = require('gulp-sri-hash'),
     LessPluginAutoPrefix = require('less-plugin-autoprefix');
 
-var filesToCopy = ['frontend/src/*.html', 'frontend/src/img/**/*', 'frontend/src/videos/**/*', 'frontend/src/fonts/**/*', 'frontend/src/js/*.compiled.js', 'frontend/src/js/*.js.map', 'frontend/src/favicon.ico'];
+var filesToCopy = ['frontend/src/index.html', 'frontend/src/img/**/*', 'frontend/src/videos/**/*', 'frontend/src/fonts/**/*', 'frontend/src/js/*.compiled.js', 'frontend/src/js/*.js.map', 'frontend/src/favicon.ico'];
 
 var TipboxAppBundler = browserify({
     entries: ['./frontend/src/js/tipbox.js'],
@@ -93,6 +93,14 @@ gulp.task('watch', function() {
     });
 });
 
+gulp.task('sri', () => {
+  return gulp.src('frontend/dist/index.html')
+    // do not modify contents of any referenced css- and js-files after this task...
+    .pipe(sriHash())
+    // ... manipulating html files further, is perfectly fine
+    .pipe(gulp.dest('frontend/dist/'));
+});
+
 gulp.task('minify-css', gulp.series('less', function() {
     return gulp.src('frontend/src/css/tipbox.css')
     .pipe(cleanCSS())
@@ -100,23 +108,8 @@ gulp.task('minify-css', gulp.series('less', function() {
     .pipe(gulp.dest('frontend/dist/css/'));
 }));
 
-gulp.task('inline-hash', () => {
-  console.log("Inline Hash")
-  return gulp.src('frontend/src/*.html')
-    .pipe(hashstream({
-      what: 'script',
-      replace_cb: (s, hashes) => s.replace(/script-src 'self'[^;]*/, "script-src 'self' " + hashes.join(" "))
-    }))
-    .pipe(hashstream({
-      what: 'style',
-      replace_cb: (s, hashes) => s.replace(/style-src 'self'[^;]*/, "style-src 'self' " + hashes.join(" "))
-    }))
-    .pipe(gulp.dest('./frontend/dist/'))
-  ;
-});
-
 gulp.task('default', gulp.series('watch', 'less'));
-gulp.task('compile', gulp.series('browserify-app', 'browserify-nav', 'minify-css', 'inline-hash'));
+gulp.task('compile', gulp.series('browserify-app', 'browserify-nav', 'minify-css'));
 
 gulp.task('copy', gulp.series('compile', function() {
     return gulp.src(filesToCopy, {
@@ -125,4 +118,4 @@ gulp.task('copy', gulp.series('compile', function() {
     .pipe(gulp.dest('frontend/dist'));
 }));
 
-gulp.task('build', gulp.series('copy'));
+gulp.task('build', gulp.series('copy', 'sri'));

@@ -15,7 +15,7 @@ module.exports = function(app) {
     }
 
     // Enforce a strong CSP Policy
-    res.setHeader("Content-Security-Policy","default-src 'none'; script-src "+origin+"; style-src "+origin+"; media-src "+origin+"; img-src "+origin+" data:; font-src "+origin+" data:; connect-src "+origin+" https://keybase.io;");
+    res.setHeader("Content-Security-Policy","default-src 'none'; script-src 'self'; style-src 'self'; media-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'");
 
     next();
   });
