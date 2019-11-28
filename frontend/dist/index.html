@@ -1,0 +1,519 @@
+<!DOCTYPE html><html><head>
+
+    <meta charset="utf-8">
+    <title>Tipbox</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="css/tipbox.css" rel="stylesheet" integrity="sha384-O9/xLcpmv/oTlwqpeksswd455VBYuZ/t6meyOhiTVDR2mm01ybXeyI8M6R6aRAHv" crossorigin="anonymous">
+
+  </head>
+  <body>
+
+  <div id="createView" class="hidden">
+    <header class="bar bar-nav">
+      <h1 class="title">Create a Tipbox</h1>
+    </header>
+
+    <div class="bar bar-footer">
+      <div class="inner">
+        <a class="navigate-right updated-text openModal" data-modal="aboutModal">About Tipbox</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="inner">
+        <form class="input-group">
+
+          <div class="padded">
+            <p class="info">Fill out this form and we will send you a unique and private URL that you can share to start collecting anonymous feedback and tips.</p>
+          </div>
+
+          <div class="input-row">
+            <label>Your email:</label>
+            <input type="text" placeholder="you@yourcompany.com" id="recipient">
+          </div>
+          <div class="input-row">
+            <label>Subject:</label>
+            <input type="text" name="subject" placeholder="Any feedback or tip?" id="subject">
+          </div>
+          <div class="padded" id="encryption">
+            <label>Encryption:</label>
+            <div class="spinner hidden">
+              <div class="spinner_container">
+                <div class="blockG" id="rotateG_01"></div>
+                <div class="blockG" id="rotateG_02"></div>
+                <div class="blockG" id="rotateG_03"></div>
+                <div class="blockG" id="rotateG_04"></div>
+                <div class="blockG" id="rotateG_05"></div>
+                <div class="blockG" id="rotateG_06"></div>
+                <div class="blockG" id="rotateG_07"></div>
+                <div class="blockG" id="rotateG_08"></div>
+              </div>
+            </div>
+            <p class="info" id="encryptionInfo">To enable end-to-end PGP encryption, make sure that the public PGP key associated to your email address has been published to a <a href="https://keys.openpgp.org">public key server</a>.</p>
+          </div>
+
+          <ul id="selectPGP" class="table-view">
+            <li class="table-view-cell media hidden"><span class="media-object pull-left icon icon-check"></span></li>
+          </ul>
+
+          <div class="padded error hidden" id="errorlog">
+            <label>Error:</label>
+            <span></span>
+          </div>
+
+          <div class="input-row checkbox">
+            <input type="checkbox" id="agreeToS">
+            <label class="tos">
+              I accept the <a href="/#tos">Terms of Service</a> and <a href="/#privacy-notice">Privacy Policy</a>.
+            </label>
+          </div>
+
+          <button class="btn btn-positive btn-block" id="createBtn">Create tipbox</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="tipboxCreated">
+      <header class="bar bar-nav">
+        <div class="inner">
+          <h1 class="title">Tipbox created</h1>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="inner">
+          <div class="thankyou">
+            <img src="/img/tipbox.jpg" class="rounded">
+            <h4>Your tipbox has been created</h4>
+          </div>
+          <div class="content-centered">
+            <p>The unique and private URL for your Tipbox has been sent to you by email.</p>
+            <p><strong>#protip</strong>: Put your unique URL in your Twitter Bio or in your email signature to let people know how they can reach you anonymously. Or share it within closed communities (e.g. LinkedIn, Facebook groups or forums) to increase the quality of the tips.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="unsupportedBrowser" class="hidden">
+    <header class="bar bar-nav error">
+      <div class="inner">
+        <h1 class="title error">Browser Not Supported</h1>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="inner">
+        <div class="thankyou">
+          <img src="/img/tipbox.jpg" class="rounded">
+          <h4>Please use a modern browser to use Tipbox.</h4>
+        </div>
+        <div class="content-centered">
+          <p>The browser that you are currently using does not support advanced cryptographic features that Tipbox is using to encrypt the content of your tip before sending it through the network.</p>
+          <p><strong>Supported browsers</strong>: Safari or Chrome on your iPhone or Android, or Internet Explorer 11 or later, Google Chrome, Apple Safari or Firefox on your computer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="homeView" class="hidden">
+    <!-- Offcanvas menu -->
+    <nav id="menu">
+      <div class="sidebar">
+        <a href="#home"><h2 class="title">TipBox</h2></a>
+        <ul class="list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#tos">Terms of Service</a></li>
+          <li><a href="#privacy-notice">Privacy Notice</a></li>
+          <li><a href="https://opencollective.com/tipbox">Donate</a></li>
+          <li><a href="#transactions">Transactions</a></li>
+        </ul>
+        <ul class="social">
+          <li>
+            <a href="https://twitter.com/gettipbox">
+              <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><title>Artboard 1</title><path d="M19.794 0C8.86 0 0 8.862 0 19.794s8.86 19.794 19.794 19.794c10.93 0 19.794-8.862 19.794-19.794S30.725 0 19.794 0zm8.05 16.215c.008.168.01.336.01.505 0 5.152-3.92 11.092-11.09 11.092-2.202 0-4.25-.646-5.976-1.752.304.037.614.055.93.055 1.826 0 3.507-.623 4.84-1.67-1.705-.03-3.145-1.158-3.64-2.706.237.044.482.07.733.07.356 0 .7-.05 1.028-.138-1.784-.36-3.127-1.934-3.127-3.823v-.05c.526.292 1.128.467 1.767.488-1.046-.7-1.734-1.893-1.734-3.246 0-.714.19-1.383.527-1.96 1.923 2.36 4.796 3.912 8.036 4.074-.067-.285-.1-.583-.1-.888 0-2.153 1.745-3.9 3.897-3.9 1.12 0 2.135.475 2.846 1.232.887-.174 1.72-.5 2.475-.946-.292.91-.91 1.675-1.714 2.158.79-.095 1.54-.304 2.24-.614-.523.78-1.184 1.468-1.946 2.017z" fill="#FFF" fill-rule="evenodd"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <section id="content">
+      <!-- Header section -->
+      <section class="main">
+        <div class="wrapper">
+          <header class="header">
+            <a href><h1>TipBox</h1></a>
+            <span id="open-menu">☰</span>
+          </header>
+          <div class="hero">
+            <h2>Share a URL to collect anonymous feedback</h2>
+            <a class="join" href="#create">Create a Tipbox</a>
+          </div>
+        </div>
+      </section>
+      <!-- Home page -->
+      <main id="home" class="active">
+        <section class="main">
+          <div class="presentation">
+            <div class="demo">
+              <div class="images"></div>
+              <div class="video">
+                <video preload="metadata" muted loop controls>
+                  <source src="videos/screencast.webm">
+                  <source src="videos/screencast.mp4">
+                </video>
+              </div>
+            </div>
+            <div class="action-list">
+              <h3>TipBox in Action</h3>
+              <ol>
+                <li>Enter your E-Mail</li>
+                <li>Enter a Subject Line</li>
+                <li>Get a Unique URL that you can share to start collecting anonymous feedback</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+        <div class="divider"></div>
+        <section class="features">
+          <h2>Features</h2>
+          <ul class="features-list">
+            <li class="item">
+              <svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><title>Artboard 1</title><g transform="translate(5 5)" fill="none" fill-rule="evenodd"><g stroke="#231F20" stroke-width="2"><path d="M83.27 54.535v4.09c3.01 1.524 1.54 9.01-3.01 9.01 0 9.01-10.64 15.038-15.19 15.038-4.55 0-15.19-6.03-15.19-15.04-4.55 0-6.09-7.554-3.01-9.01v-4.088M63.81 75.05h2.38"/><path d="M65 55.644c-16.73 0-30.45-2.98-30.45-2.98l13.72-7.555L55.9 30l9.1 6.03M65 55.644c16.73 0 30.45-2.98 30.45-2.98L81.73 45.04 74.1 30 65 36.03M42.18 99.307l4.55-9.01-9.52 1.87s2.38-16.355 2.38-23.91h3.64c.07 16.565 29.05 31.05 33.95 31.05h-35z"/><path d="M38.89 79C35.88 80.525 30 82.465 30 89.465v9.842h35M91.11 79c3.01 1.525 8.89 3.673 8.89 10.743v9.564H65"/><path d="M87.82 99.307l-4.55-9.01 9.52 1.87s-2.38-16.355-2.38-23.91h-3.64C85.23 80.317 71.3 95.01 66.4 95.01M48.27 45.04S55.9 48.02 65 48.02c9.1 0 16.73-2.98 16.73-2.98"/></g><circle stroke="#5CB85C" stroke-width="4" cx="65" cy="65" r="65"/></g></svg>
+              <h4>Anonymous</h4>
+              <p>The person sending you a tip doesn't need to provide any information about them. We don't keep any logs, we don't store any data. There is no way for you to know who sent you the email (unless the person explicitly decided to provide contact information in the body of the email).</p>
+            </li>
+            <li class="item">
+              <svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><title>Artboard 1</title><g transform="translate(5 5)" fill="none" fill-rule="evenodd"><g stroke-width="2"><path d="M72.023 66.14c2.778 2.76 5.92 3.18 7.972 1.14l13.408-13.32c2.657-2.64 2.657-6.96 0-9.6l-7.43-7.38c-2.656-2.64-7.005-2.64-9.662 0L62.904 50.3c-2.114 2.1-1.57 5.22 1.147 7.92M58.373 63.86c-2.718-2.7-5.858-3.24-7.972-1.14l-13.347 13.2c-2.657 2.64-2.657 6.96 0 9.6l7.55 7.5c2.657 2.64 7.006 2.64 9.663 0l13.287-13.26c2.114-2.1 1.57-5.22-1.147-7.92" stroke="#231F20"/><path d="M53.783 76.34l22.83-22.68" stroke="#5CB85C"/></g><circle stroke="#5CB85C" stroke-width="4" cx="65" cy="65" r="65"/></g></svg>
+              <h4>Nothing to install, just open a link</h4>
+              <p>Make it easy for people to send you tips. Don't require them to install anything. They just have to click on the unique URL of your Tipbox and they are good to go. It's that easy.</p>
+            </li>
+            <li class="item">
+              <svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><title>Artboard 1</title><g transform="translate(5 5)" fill="none" fill-rule="evenodd"><g transform="translate(36 35)" stroke-width="2"><path d="M26.34 54.178H0V0h29.262l12.574 12.535v11.11" stroke="#231F20"/><path d="M29.262 0v12.535h12.574" stroke="#231F20"/><path stroke="#5CB85C" d="M33.433 40.634h25.09v18.772h-25.09zM46.008 54.178v-4.515"/><ellipse stroke="#5CB85C" cx="46.008" cy="47.584" rx="2.086" ry="2.079"/><path d="M38.678 40.634v-3.15c0-4.335 2.92-7.306 7.33-7.306 4.35 0 7.33 2.91 7.33 7.307v3.208" stroke="#5CB85C"/></g><circle stroke="#5CB85C" stroke-width="4" cx="65" cy="65" r="65"/></g></svg>
+              <h4>End-To-End encryption</h4>
+              <p>If you have a PGP key associated to your email address, you can turn on End-To-End encryption. In that case, our server will never be able to read the content of the tips that are sent to you.</p>
+            </li>
+          </ul>
+        </section>
+      </main>
+      <!-- About page -->
+      <main id="about" class="hidden about">
+        <section class="information">
+          <article>
+            <div class="title">
+              <h2>About</h2>
+            </div>
+            <div class="description">
+              <p>Tipbox is a free open source service to receive anonymous tips via email.</p>
+              <p>Ideal for journalists to receive tips or to collect testimonials from certain communities, or for managers to get direct and honest feedback from their team.</p>
+              <p>Tips are encrypted using PGP on the client side. We don't keep any logs and we don't store any data. Only the recipient gets the email.</p>
+              <p>This service has been developed with ease of use first and as such doesn't require installing any software. Therefore, we are relying on the security model of your browser. That means that we can't technically make any guarantee that you are running an untampered version of this software. If you care about high level of security, please read our <a href="#security">security section</a> very carefully.</p>
+              <p>See our <a href="#faq">FAQ</a> for more information.</p>
+              <img src="../img/Desktop.png" alt>
+            </div>
+            <div class="divider"></div>
+          </article>
+        </section>
+      </main>
+      <!-- FAQ page -->
+      <main id="faq" class="hidden">
+        <section class="information">
+          <article>
+            <div class="title">
+              <h2>F.A.Q.</h2>
+            </div>
+            <div class="description">
+              <b>How does it work?</b>
+              <p>Just provide your email address and a subject line of your choice and we will send you a secret and unique URL that you can share wherever you like. When someone opens that URL, a familiar email interface will invite them to send you an anonymous email (the recipient and the subject line of that email will be already prefilled with what you have defined). If you have a PGP key associated to your email address on a public key server, we will use it to encrypt the email end-to-end.</p>
+              <b>What is this for?</b>
+              <p>If you are a blogger or a journalist, you may want to use this to get information from insiders. Create a tipbox and share the link within the appropriate LinkedIn or Facebook group. Remember, "News Is What Somebody Doesn't Want You To Print. All The Rest Is Advertising Or Public Relations."</p>
+              <p>If you are a manager, you may want to use this to get feedback from your team. You would be surprised of the quality of the feedback that you could get if you can guarantee their anonymity. It’s also very important to give your employees an easy way to voice their opinion internally.</p>
+              <b>Why building this?</b>
+              <p>Today, there isn’t any easy tool for journalists to gather anonymous tips. As a result, most of them rely on non-encrypted emails and their sources have to basically create a new email address which takes time (especially now that most email providers require a phone number). So we thought that we could come up with a very easy tool to use that would remove the need for the tipster to create a new email address.</p>
+              <b>How secure is this?</b>
+              <p>For the tipster, it is as safe as creating a new email address and sending an email with it through a web interface and removing it right after from the “Sent” folder.</p>
+              <p>For the journalist, it is as safe as receiving an email. But if have a PGP key associated to your email address, you can opt-in to receive a PGP encrypted email which is definitely safer to keep in your inbox than a non-encrypted email.</p>
+              <p>That said, since Tipbox doesn’t require the tipster to download any piece of software, it relies -like any other webmail service- on the security of the browser which is not full proof. That’s why we advise against using Tipbox for NSA level leaks. For very important leaks, you should better use <a href="https://freedom.press/securedrop">SecureDrop</a> which has been especially engineered for that purpose.</p>
+              <b>What about the metadata?</b>
+              <p>While we don’t keep any logs, there are many intermediaries between the end user and our server. Each of those could keep the logs to identify which IP addresses connected to our server. That’s why we strongly advised against using Tipbox while being connected to the Wifi network of your company. Just use it on your phone with your data plan. For increased anonymity, you could also connect to our server via Tor: <a href="http://tipboxtdf3ydy5xq.onion">tipboxtdf3ydy5xq.onion</a>.</p>
+              <p>However, Tipbox has been engineered in such a way that intermediaries can’t identify the recipient, subject or content of the tip. Intermediaries can’t distinguish between visitors who come to create a new Tipbox and those who use it to submit a tip to person A or to person B.</p>
+              <p>If security is very important to you, please read more about <a href="security.html">security</a>.</p>
+              <b>Who is behind this?</b>
+              <p>Xavier Damman (<a href="https://twitter.com/xdamman">@xdamman</a>), Mark Percival (<a href="https://twitter.com/mdp">@mdp</a>), <a href="https://twitter.com/tgouverneur">@tgouverneur</a>, <a href="https://twitter.com/montogeek">@montogeek</a>, <a href="https://twitter.com/evilrabbit_">@evilrabbit_</a> <br> with the financial support of the <a href="http://www.knightfoundation.org/">Knight Foundation</a>.</p> 
+              <b>Follow this project</b>
+              <p>We will post updates to our Twitter account <a href="https://twitter.com/GetTipbox">@GetTipbox</a>.</p>
+              <p>You should also star/watch our public repo <a href="https://github.com/xdamman/tipbox">https://github.com/xdamman/tipbox</a>. This is an open source project. Contributions are welcome!</p>
+            </div>
+          </article>
+        </section>
+      </main>
+      <!-- Security page -->
+      <main id="security" class="hidden">
+        <section class="information">
+          <article>
+            <div class="title">
+              <h2>Security</h2>
+            </div>
+            <div class="description">
+              <p>Leaking information to the press is an inherently risky activity for both the journalist and the leaker. <a href="https://www.washingtonpost.com/blogs/erik-wemple/wp/2017/06/06/did-the-intercept-bungle-nsa-leak/"></a>Even using the most secure methods is not risk free. Tipbox makes it easy to get information from sources who might not be capable of installing the software required to interact with more secure solutions (eg. Tor and Securedrop). Based on your sources, threat model and potential adversaries, it's ulimately up to you to decide if Tipbox is an acceptible solution.</p>
+
+              <p>There will always be a tradeoff between security and usability. For many journalists, the type of information they are dealing with is not 
+                
+                That’s why you need to think of Tipbox as a U-lock for your bike: perfect for everyday use but not full proof. Depending on your threat model, this may or may not matter. It’s all about finding the appropriate tool for the job. That’s why we don’t recommend using Tipbox with sources that are already under active surveillance.</p>
+
+              <p>However, we've made our best effort to build a tool that allows anyone to send you a tip in a secure way with nothing more than a modern browser. Tips sent to recipients with PGP keys will be encrypted at the browser, and the server will never know the contents of that tip. We do our best to ensure that we keep no logs of how acccessed the server or any email that was sent.</p>
+
+              <p>If you need a higher level of security, you should require your source to install an app (such as <a href="https://itunes.apple.com/us/app/signal-private-messenger/id874139669?mt=8">Signal for iPhone</a> or <a href="https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms&hl=en">TextSecure for Android</a>) or use <a href="https://freedom.press/securedrop">SecureDrop</a>.</p>
+            </div>
+          </article>
+          <article>
+            <div class="title">
+              <h2>Technology</h2>
+            </div>
+            <div class="description">
+              <p>This site is using the latest SSL cryptography standard. We don't keep any logs and we don't store any data. The tips are directly sent to the email address of the recipient. If the recipient has a PGP key associated to their email address on a <a href="https://pgp.mit.edu/">public key server</a>, we will use it to encrypt the email end-to-end. If there isn't one, we will still use PGP to encrypt the email from the browser of the user to our email server to avoid passive <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attacks</a> (<a href="http://thehackernews.com/2013/12/fake-google-ssl-certificates-made-in.html">as the French government did to spy on its own users</a>).</p>
+              <b>Potential risks</b>
+              <p>Any intermediary between the end user and this server (such as your ISP) could record the IP addresses that are connecting to this server. To be clear, that would only reveal who accessed this server, not the actual Tipbox, recipient or content of the tip.</p>
+              <p>Sophisticated attackers who could monitor the requests coming in and out of our server to do statistical analysis of the traffic based on the size of the requests. To mitigate this, we add padding to the requests sent to our server. That way, whether your tip is short or long or contains an attachment or not, its size won't reflect its real size and observers can't make any assumption on its content. We also add a random delay between the request to our server and sending the tip to the recipient so that observers can't easily synchronize logs.</p>
+              <p>Another potential security risk would be someone hacking into our server and changing the html/javascript code being served to our users. To mitigate this, we invite you to make sure that the html page and javascript file served by this server are the same than what is available on <a href="https://github.com/xdamman/tipbox">our public repo</a>. That way an attacker would have to hack both our server and our Github repo which has 2-factor authentication.</p>
+              <p><strong>For all those reasons, while Tipbox is making a lot of effort to make it very hard for adversaries to spy on who is sending you tips, we can't make any guarantee and you should use this service at your own risk. For high risk whistleblowing, you should better use <a href="https://securedrop.org/">SecureDrop</a> or you should require your source to install an app such as <a href="https://itunes.apple.com/us/app/signal-private-messenger/id874139669?mt=8">Signal for iPhone</a> or <a href="https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms&hl=en">Android</a>.</strong></p>
+            </div>
+          </article>
+        </section>
+      </main>
+      <!-- Terms of Service (ToS) Page -->
+      <main id="tos" class="hidden">
+        <section class="information">
+          <article>
+            <div class="title">
+              <h2>Terms of Service</h2>
+            </div>
+            <div class="description">
+              <b>TL;DR;</b>
+              <p>Tipbox is not a funded company. It’s an open source project with contributors from all around the world who want to help you collect anonymous emails in an encrypted way. Use at your own risk. Thank you, love, - Xavier & Mark, founders of Tipbox on behalf of all Tipbox contributors.</p>
+              <b>Acceptance of Terms.</b>
+              <p>This is a binding contract (“Terms”) between you and TipBox, (“we,” “us,” “our,” “TipBox”). By using TipBox, you agree to be bound by these Terms. If you use TipBox on behalf of an organization, you agree to these terms on behalf of that organization. If you do not agree to these Terms, you may not use TipBox. We may update or alter TipBox features and functionality at any time, and these Terms will still apply.</p>
+              <b>Eligibility.</b>
+              <p> TipBox is provided to individuals who are at least 18 years old or to minors who have parental consent to use the service.</p>
+              <b>Changes to these Terms.</b>
+              <p>If we make changes to these Terms that are material, we will let you know by posting a notice on our home page. The notice will designate a reasonable period of time after which the new Terms will take effect. If you disagree with our changes, then you should stop using TipBox within the designated notice period. Your continued use of TipBox will be subject to the new Terms.</p>
+              <b>Intellectual Property:</b>
+              <p>TipBox is an open source project distributed under the terms of the <a href="http://opensource.org/licenses/MIT">MIT License</a>. By using TipBox, you agree to abide by the terms of that license.</p>
+              <b>Responsibility for Content.</b>
+              <p>You are solely responsible for any content you transmit via TipBox. You agree that you will not use TipBox for any purpose that is unlawful. TipBox does not monitor content. You understand that you may be exposed to content that is inappropriate or illegal, and you assume all risks associated with your use of TipBox.</p>
+              <b>Feedback.</b>
+              <p>We appreciate any feedback, comments, or suggestions you may have for improving TipBox. If you have suggestions or wish to help make TipBox better and more secure, please contact us via our GitHub page.</p>
+              <b>Third Parties.</b>
+              <p>TipBox does not control, and is in no way responsible for, the acts or omissions of any third party, including but not limited to your ISP, email provider, or other intermediary. We strongly encourage you to carefully review the Terms of Service and Privacy Policies of any third party vendors you choose to use in conjunction with TipBox.</p>
+              <b>Termination.</b>
+              <p>You are free to stop using TipBox at any time. We also reserve the right to suspend or stop making TipBox at any time at our discretion and without notice.</p>
+              <b>Disclaimer of Warranties.</b>
+              <p>You expressly understand and agree that your use of the TipBox is at your sole risk. TipBox is provided on an "as is" and "as available" basis. TipBox, its founders, and its contributors expressly disclaim all warranties of any kind, whether express or implied, including, but not limited to the implied warranties of merchantability, fitness for a particular purpose and non-infringement. TipBox and its subsidiaries, affiliates, contributors,  agents, and licensors make no warranty that (i) TipBox will meet your requirements; (ii) TipBox will be uninterrupted, timely, secure or error-free and (iii) the results that may be obtained from the use of TipBox will be accurate or reliable.</p>
+              <b>Limitation of Liability.</b>
+              <p>TipBox shall not have any liability for any indirect, incidental, consequential, special, exemplary, or punitive damages under any theory of liability arising out of, or relating to, these Terms or your use of, or inability to use, TipBox. As a condition of receiving access to TipBox, you understand and agree that our liability shall not exceed one satoshi.</p>
+              <b>Indemnification.</b>
+              <p>You will indemnify, defend, and hold TipBox, its founders, subsidiaries, affiliates, and contributors harmless from any and all claims, damages, losses, liabilities, actions, judgments, costs, and expenses (including reasonable attorneys’ fees) brought by a third party arising out of or in connection with: (i) any act or omission by you, in connection with your use of TipBox or (ii) your breach or alleged breach of any of these Terms. We may, in our discretion, elect to take over control of the defense and settlement of a claim subject to indemnification. You agree not to settle any such claim without our prior written consent.</p>
+              <b>Entire Agreement.</b>
+              <p>These Terms constitute the entire agreement between you and us regarding your use of TipBox.</p>
+              <b>Waiver and Severability of Terms.</b>
+              <p>ipBox’s failure to exercise or enforce any right or provision of these Terms shall not constitute a waiver of such right or provision. If any provision of these Terms is found by a court of competent jurisdiction to be invalid, the parties nevertheless agree that the court should endeavor to give effect to the parties' intentions as reflected in the provision, and the other provisions of these Terms remain in full force and effect.</p>
+              <b>Governing Law.</b>
+              <p>You agree that these Terms, and your use of TipBox, are governed by California law, in the United States of America, without regard to its principles of conflicts of law. You and TipBox agree to submit to the personal and exclusive jurisdiction of the courts located in San Francisco, California.</p>
+            </div>
+          </article>
+        </section>
+      </main>
+      <!-- Privacy Notice page -->
+      <main id="privacy-notice" class="hidden">
+        <section class="information">
+          <article>
+            <div class="title">
+              <h2>Privacy Notice</h2>
+            </div>
+            <div class="description">
+              <p>We don’t store or share any data, of any kind, about users of TipBox. Period. Full stop. We keep no logs; we have no database. We literally don’t even know how many people use TipBox.</p>
+              <b>Personal Data We Require</b>
+              <p>In order to create a TipBox you must give us an email address, so the tips will know where to go. TipBox embeds your email address in the unique URL that is automatically generated for you. We do not store the email address you give us in any form -- as explained above, we don’t keep a database of TipBox URLs. It is up to you whether and how you decide to share the TipBox URL containing your email address.</p>
+              <b>Further Explanation of the Data We Do Not Collect</b>
+              <p>When you create a TipBox, we don’t require you to register for an account. We don’t ask for your real name, a username, or a password. We don’t collect your IP address, we don’t know where you live or what language you speak.</p>
+              <p>We also don’t read or store any of the data that is automatically sent to us by your browser, including information about your browser type, what operating system you run, or even whether you’re accessing TipBox via a mobile device.</p>
+              <p>We don’t set cookies, or any other technology that can track what you do on our site or across sites. No Google Analytics. We know nothing about you.</p>
+              <b>We Can’t Share What We Don’t Have</b>
+              <p>Whether it’s the NSA, a marketing company, or your ex, anyone who comes looking for your data from us is going to be out of luck. The most we’ll be able to give them is a polite explanation of how encryption works.</p>
+              <b>Security</b>
+              <p>You can find out about TipBox security <a href="/#security">here</a>. While we work hard to keep tips anonymous, we do not guarantee perfect security. You use TipBox at your own risk.</p>
+              <b>Deleting a Tip</b>
+              <p>The only place a TipBox is stored is in your email inbox. We do not backup tips, so if you delete a tip we cannot recover it for you. Consider yourself warned.</p>
+              <b>What Other People Might See</b>
+              <p>Because we rely on in-browser security, there is a risk that a third party, such as your ISP or a malicious attacker, could find out that your IP address connected to a TipBox server (but – by design – they can’t tell which particular TipBox a user was trying to send a tip to). If this is important to you, we recommend you use <a href="https://www.torproject.org/about/overview.html.en">Tor</a> (you can connect to this server with this .onion url: <a href="http://tipboxtdf3ydy5xq.onion">tipboxtdf3ydy5xq.onion</a>). We have no control over the logging policy of any third party intermediary, and are not responsible for any acts or omissions by third parties.</p>
+              <b>Changes</b>
+              <p>We may update this Notice to reflect changes in our product or applicable laws. If we make material changes that might impact you, we will notify you by placing a prominent notice on our home page.</p>
+            </div>
+          </article>
+        </section>
+      </main>
+      <footer class="footer">
+        <p class="copyright">
+          <a href="https://github.com/xdamman/tipbox">Open Source Project</a> made with ♥ by <a href="https://twitter.com/xdamman">@xdamman</a>, <a href="https://twitter.com/mdp">@mdp</a>, <a href="https://twitter.com/tgouverneur">@tgouverneur</a>, <a href="https://twitter.com/montogeek">@montogeek</a>, <a href="https://twitter.com/evilrabbit_">@evilrabbit_</a> <br> with the financial support of the <a href="http://www.knightfoundation.org/">Knight Foundation</a>.
+        </p>
+        <ul class="social">
+          <li>
+            <a href="https://twitter.com/gettipbox">
+              <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><title>Artboard 1</title><path d="M19.794 0C8.86 0 0 8.862 0 19.794s8.86 19.794 19.794 19.794c10.93 0 19.794-8.862 19.794-19.794S30.725 0 19.794 0zm8.05 16.215c.008.168.01.336.01.505 0 5.152-3.92 11.092-11.09 11.092-2.202 0-4.25-.646-5.976-1.752.304.037.614.055.93.055 1.826 0 3.507-.623 4.84-1.67-1.705-.03-3.145-1.158-3.64-2.706.237.044.482.07.733.07.356 0 .7-.05 1.028-.138-1.784-.36-3.127-1.934-3.127-3.823v-.05c.526.292 1.128.467 1.767.488-1.046-.7-1.734-1.893-1.734-3.246 0-.714.19-1.383.527-1.96 1.923 2.36 4.796 3.912 8.036 4.074-.067-.285-.1-.583-.1-.888 0-2.153 1.745-3.9 3.897-3.9 1.12 0 2.135.475 2.846 1.232.887-.174 1.72-.5 2.475-.946-.292.91-.91 1.675-1.714 2.158.79-.095 1.54-.304 2.24-.614-.523.78-1.184 1.468-1.946 2.017z" fill="#FFF" fill-rule="evenodd"/></svg>
+            </a>
+          </li>
+        </ul>
+      </footer>
+    </section>
+  </div>
+
+  <div id="securityModal" class="modal">
+    <header class="bar bar-nav">
+      <div class="inner">
+        <a class="icon icon-left-nav pull-left openModal" data-modal="securityModal"></a>
+        <h1 class="title">Security</h1>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="inner">
+        <div class="content-padded">
+          <p>This site is using the latest SSL cryptography standard. <strong>We don't keep any logs and we don't store any email address or any tips</strong>. The tips are directly sent to the email address of the recipient. If the recipient has a PGP key associated to their email address on a <a href="https://pgp.mit.edu">public key server</a>, we will use it to encrypt the email end-to-end. If there isn't one, we will still use PGP to encrypt the email from the browser of the user to our email server to avoid <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attacks</a> (<a href="https://thehackernews.com/2013/12/fake-google-ssl-certificates-made-in.html">as the French goverment did to spy on its own users</a>).</p>
+          <p>The unique and private URL of a tipbox has the following format: <code>https://tipbox.is#email/subject/[fingerprint]/signature</code>
+          Since all the information that identifies a tipbox is in the hash, it is never sent to the server. The frontend client reads it and encrypts it with the PGP key of the server before sending it with the content of the tip. This way, even in case of a man-in-the-middle attack, the attacker won't be able to tell which tipbox the user was trying to send a tip to.</p>
+          <h4>Potential risks</h4>
+          <p>There is always a tradeoff between ease of use and security (that's why you don't live in a bunker). By not requiring your potential sources to install an app, there is a risk that a hacker could tamper with the files served to them to include a key logger.</p>
+          <p>To do that though, the hacker would have to know before hand who is going to send a tip through Tipbox. They will also have to find a way to get in between that user and our server just before the source loads the Tipbox website. Not easy to pull off especially over HTTPS but not impossible.</p>
+          <p>That’s why you need to think of Tipbox as a U-lock for your bike: perfect for everyday use but not full proof. Given enough dedication, time and appropriate tooling, adversaries could tamper with it if they know before hand who are your sources. Depending on your threat model, this may or may not matter. It’s all about finding the appropriate tool for the job. That’s why we don’t recommend using Tipbox with sources that are already under active surveillance.</p>
+          <p>Any intermediary between the end user and this server (such as your ISP) could record the IP addresses that are connecting to this server. To be clear, that would only reveal who accessed this server, not the actual tipbox, recipient or content of the tip. This could be mitigated by connecting to this site through <a href="https://www.torproject.org/">Tor</a> using this .onion url: <a href="http://tipboxtdf3ydy5xq.onion">tipboxtdf3ydy5xq.onion</a>.</p>
+          <p>Sophisticated attackers who could monitor the requests in and out of our server could make statistical analysis of the traffic based on the size of the requests. To mitigate this, we add fake weight to the requests sent to our server. That way, whether your tip is short or long or contains an attachment or not, its size won't reflect its real size and observers can't make any assumption on its content. We also add a random delay between the request to our server and sending the tip to the recipient so that observers can't synchronize logs.</p>
+          <p>Another potential security risk would be someone hacking into our server and changing the html/javascript code being served to our users. To mitigate this, we invite you to make sure that the html page and javascript file served by this server are the same than what is available on <a href="https://github.com/xdamman/tipbox">our public repo</a>. That way an attacker would have to hack both our server and our Github repo which has 2-factor authentication.</p>
+          <p><strong>For all those reasons, while Tipbox is making a lot of effort to make it very hard for attackers or any government to spy on who is sending you tips, we can't make any guarantee and you should use this service at your own risk. For high risk whistleblowing, you should better use <a href="https://freedom.press/securedrop">SecureDrop</a> which has been especially engineered for that purpose or you should require your source to install an app such as <a href="https://itunes.apple.com/us/app/signal-private-messenger/id874139669?mt=8">Signal for iPhone</a> or <a href="https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms&hl=en">TextSecure for Android</a>.</strong></p><strong>
+.</strong><p></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="composeView" class="hidden">
+    <header class="bar bar-nav">
+      <div class="inner">
+        <a class="btn btn-link pull-right" id="sendBtn">
+          <strong>Send</strong>
+        </a>
+        <h1 class="title">New message</h1>
+      </div>
+      <div id="progressBar"></div>
+    </header>
+
+    <div class="bar bar-footer">
+      <div class="inner">
+        <a class="navigate-right updated-text openModal" data-modal="aboutModal">About Tipbox and how it protects your anonymity</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="inner" id="tip">
+        <form class="input-group">
+          <div class="input-row">
+            <label>To:</label>
+            <span id="recipient" data-attr="recipient">loading...</span>
+            <div id="pgp_fingerprint" class="hidden">
+              <img src="/img/padlock.svg">
+              <span></span>
+            </div>
+          </div>
+          <div class="input-row">
+            <label>From:</label>
+            <input type="text" name="from" id="from" value="Anonymous" maxlength="40">
+          </div>
+          <div class="input-row">
+            <label>Subject:</label>
+            <span id="subject" title data-attr="subject"></span>
+          </div>
+          <div class="input-row">
+            <label>Attachment:</label>
+            <div id="selectedFile" class="hidden">
+              <span id="filename"></span>
+              <span class="icon icon-close" id="removeAttachment"></span>
+            </div>
+            <input type="file" name="fileToUpload" id="fileToUpload" accept="*" capture="camera">
+          </div>
+          <textarea rows="5" id="tipBody" placeholder="Enter your message here"></textarea>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="tipSentModal">
+    <header class="bar bar-nav">
+      <div class="inner">
+        <h1 class="title">Tip sent</h1>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="inner">
+        <div class="thankyou">
+          <img src="/img/tipbox.jpg" class="rounded">
+          <h4>The tip is in da box!</h4>
+        </div>
+        <div class="content-centered">
+          <p>Your email has been successfully sent. To protect your anonymity, it will be delivered to <span id="toEmail" data-attr="recipient"></span> with a random delay of 10 to 20 minutes.</p>
+          <p>You can now close this tab.</p><p><i>For extra privacy,<br>you may consider clearing your browser history.</i></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="aboutModal" class="modal">
+    <header class="bar bar-nav">
+      <div class="inner">
+        <a class="icon icon-left-nav pull-left openModal" data-modal="aboutModal"></a>
+        <h1 class="title">About Tipbox</h1>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="inner">
+        <div class="tipbox_avatar">
+          <img src="/img/tipbox.jpg" class="rounded">
+        </div>
+        <div class="content-padded">
+          <p><a href="#home">Tipbox</a> is a free open source service to receive anonymous tips via email.</p>
+          <p>We don't keep any logs and we don't store any data. Only the recipient gets the email.</p>
+          <p>Ideal for journalists to receive tips or to collect testimonials from certain communities, or for managers to get direct and honest feedback from their team.</p>
+          <p>Tips are encrypted using PGP on the client side with the recipient's PGP key if one exists and with the public key of the Tipbox server.</p>
+          <p>While Tipbox is making a lot of effort to make this service as robust as possible, we can't make any guarantee. Use this service at your own risk.</p>
+          <p> </p>
+        </div>
+
+        <ul class="table-view">
+          <li class="table-view-cell">
+            <a class="openModal navigate-right" data-modal="securityModal">Read more about security</a>
+          </li>
+          <li class="table-view-cell">
+            <a class="navigate-right" href="https://twitter.com/gettipbox">Follow us on Twitter</a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/navigation.compiled.js" integrity="sha384-TPdyg8OVNJaJ6dvDiYg8CRnPvEBCRzc24d1wmXNYXORKX1VW+Im7JsATLxpt8X19" crossorigin="anonymous"></script>
+  <script src="js/tipbox.compiled.js" defer integrity="sha384-Rb1aIS5WLStAQRZKOGFf43pVaaZSMmXdlVEbakSOfTeHu8pfOlW9eLbZ+Nwt7019" crossorigin="anonymous"></script>
+  
+
+</body></html>

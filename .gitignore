@@ -1,9 +1,7 @@
 node_modules
 
 *.js.map
-*.compiled.js
 frontend/src/css
-frontend/dist
 data/caddy/*
 data/keys/*
 data/*.cnt
