@@ -57,7 +57,7 @@ In order to validate that the version of Tipbox has not been altered, it's possi
 `curl https://tipbox.is | openssl dgst -sha256`
 1. Compare this hash to the hash listed in VERSION.md available in this repository.
 1. Alternatively, you can also compute the hash yourself with
-`curl https://raw.githubusercontent.com/xdammon/tipbox/vVERSION/frontend/dist/index.html | openssl dgst -sha256` where VERSION is the version of the page your checking against.
+`curl https://raw.githubusercontent.com/xdamman/tipbox/vVERSION/frontend/dist/index.html | openssl dgst -sha256` where VERSION is the version of the page your checking against.
 
 ## Frontend tests with Nightwatch
 
