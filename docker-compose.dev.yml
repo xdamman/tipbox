@@ -13,19 +13,7 @@ services:
       - smtp
     volumes:
       - ".:/app"
-    expose:
-      - "3000"
-
-  caddy:
-    image: abiosoft/caddy:no-stats
     ports:
-      - "443:443"
-      - "80:80"
-    depends_on:
-      - server
-    env_file:
-      - .env.dev
-    volumes:
-      - "./Caddyfile:/etc/Caddyfile"
-      - "./data/caddy:/root/.caddy"
+      - "3000:3000"
+    command: yarn run dev
 

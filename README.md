@@ -10,59 +10,54 @@ Try it at https://tipbox.is
 - Nothing to install for the tipsters, they just need to open the unique URL generated at the creation of the Tipbox.
 - Support for photo/document upload.
 - Stateless, no logs in production (no information is ever saved).
-- Unique information about the Tipbox is in the hash of the URL so that no one can tell who opened a particular Tipbox by monitoring the network traffic.
-- PGP encryption between the frontend and the backend so reduce the risk of leaking information between a reverse-proxy and the backend.
 - Support for End-To-End encryption with PGP.
-- Automatically fetches the PGP key of the recipient from public key servers at the creation of the tipbox if one exists (you need to manually verify and select it to avoid spoofing).
+- PGP encryption between the frontend and the backend so reduce the risk of leaking information to passive man-in-the-middle.
+- Automatically fetches the PGP key of the recipient from public key server (fingerprint is included in the URL to prevent alteration).
 
 ## Disclaimer
 *This is open source software, use at your own risk.*
 
-There is always a tradeoff between ease of use and security (that's why you don't live in a bunker). By not requiring your potential sources to install an app, there is a risk that a hacker could tamper with the files served to them to include a key logger. Depending on your threat model, this may or may not matter. It’s all about finding the appropriate tool for the job. 
+There is always a tradeoff between ease of use and security. By not requiring your potential sources to install an app, there is a greater risk of exposure. Depending on your threat model, this may or may not matter. It’s all about finding the appropriate tool for the job. 
 [Read more about the security of Tipbox](https://tipbox.is#security).
 
-## How install
+## Installation and development
 
-### Setting up the keys for testing
+### Setup for production
 
-    PASSPHRASE=1234 IDENTITY="<tips@tipbox.in>" node ./server/utils/keygen.js
-    # Will generate private and public keys under the 'keys' directory
+We use Docker and docker-compose to run run the entire stack (HTTPS with certs from LetsEncrypt, Express/Node Server, SMTP Server) with a minimal setup
 
-### Running the server with the keys
-
-    PGP_PASSPHRASE=1234 npm start
-
+1. Start by altering .env with your settings
+    - You'll need to pick a passphrase for your local PGP key and an HMAC key for validating the URLs
+1. Build the image and create a new PGP key
+  - `docker-compose build server`
+  - Run the keygen script to create your keys, `docker-compose run --rm server node ./server/utils/keygen.js`. This will be saved in `/data/keys`
+  - `docker-compose run --rm server yarn build`
+1. Run the server. Ensure you have the proper DNS records pointing domain you selected in .env to the server you're running this on. Caddy will automatically generated and confirm the domain SSL certificate from LetsEncrypt using this DNS record.
+    `docker-compose up -d`
 
 ### Locally for development:
 
 After cloning this repo, simply run
 
-    npm install --dev
-    npm run dev
+    docker-compose -f docker-compose.dev.yml build
+    docker-compose -f docker-compose.dev.yml node ./server/utils/keygen.js
+    docker-compose -f docker-compose.dev.yml up
+
+Visit http://localhost:3000 in order to view the development version of the site.
 
 This will serve the static files from `frontend/src` and watch for any change.
 When any file in `frontend/src/less/` or `frontend/src/js/*` changes, `gulp` will run the `less` and the `browserify` tasks.
 
+# Validating the version of Tipbox being served
 
-### In production mode
+In order to validate that the version of Tipbox has not been altered, it's possible to compare the sha256 hash of index.html with the one checked into this repository. All external script and style assets utilize [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) hashes, meaning that any changes to the underlying Javascript or CSS will result in a different cryptographic hash for the page.
 
-   	npm install;
-   	npm run build;
-   	NODE_ENV=tipbox.is npm start;
-
-This will serve the static files from `frontend/dist`.
-
-## Generating an invitation URL
-During the private beta, an invitation code is required to create a tipbox. 
-You can generate one with the following command line:
-
-    NODE_ENV=production PGP_PASSPHRASE=1234 HMAC_KEY=[HMAC_KEY of the server] node invite.js [email address]
-
-## Docker
-
-        docker build . -t tipbox/server
-        docker run --rm -it -v $(pwd)/keys:/app/keys tipbox/server bash -c 'PASSPHRASE=1234 IDENTITY="<tips@your-domain.org>" node ./server/utils/keygen.js'
-        docker run --rm -it -p 3000:3000 -e PASSPHRASE=1234 -e HOST=your-domain.org -v $(pwd)/keys:/app/keys tipbox/server yarn start
+1. Find the version of the page being served. It will be listed in the footer, at the very bottom of the page.
+1. Get the hash of the current page being served. For example, if you want to check the version on https://tipbox.is, run the following
+`curl https://tipbox.is | openssl dgst -sha256`
+1. Compare this hash to the hash listed in VERSION.md available in this repository.
+1. Alternatively, you can also compute the hash yourself with
+`curl https://raw.githubusercontent.com/xdammon/tipbox/vVERSION/frontend/dist/index.html | openssl dgst -sha256` where VERSION is the version of the page your checking against.
 
 ## Frontend tests with Nightwatch
 

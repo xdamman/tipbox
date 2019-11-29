@@ -1,5 +1,9 @@
 var gulp = require('gulp'),
-    gutil = require('gulp-util'), source = require('vinyl-source-stream'),
+    crypto = require('crypto'),
+    fs = require('fs'),
+    packageJSON = require(__dirname + '/package.json')
+    gutil = require('gulp-util'),
+    source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
     watchify = require('watchify'),
     browserify = require('browserify'),
@@ -8,9 +12,12 @@ var gulp = require('gulp'),
     rename = require("gulp-rename"),
     sourcemaps = require('gulp-sourcemaps'),
     less = require('gulp-less'),
+    replace = require('gulp-replace'),
     path = require('path'),
     sriHash = require('gulp-sri-hash'),
     LessPluginAutoPrefix = require('less-plugin-autoprefix');
+
+var version = packageJSON.version;
 
 var filesToCopy = ['frontend/src/index.html', 'frontend/src/img/**/*', 'frontend/src/videos/**/*', 'frontend/src/fonts/**/*', 'frontend/src/js/*.compiled.js', 'frontend/src/js/*.js.map', 'frontend/src/favicon.ico'];
 
@@ -101,6 +108,15 @@ gulp.task('sri', () => {
     .pipe(gulp.dest('frontend/dist/'));
 });
 
+gulp.task('version', () => {
+  console.log("Updating version to ", version);
+  return gulp.src('frontend/dist/index.html')
+    // do not modify contents of any referenced css- and js-files after this task...
+    .pipe(replace('$VERSION$', version))
+    // ... manipulating html files further, is perfectly fine
+    .pipe(gulp.dest('frontend/dist/'));
+});
+
 gulp.task('minify-css', gulp.series('less', function() {
     return gulp.src('frontend/src/css/tipbox.css')
     .pipe(cleanCSS())
@@ -111,6 +127,30 @@ gulp.task('minify-css', gulp.series('less', function() {
 gulp.task('default', gulp.series('watch', 'less'));
 gulp.task('compile', gulp.series('browserify-app', 'browserify-nav', 'minify-css'));
 
+// Output the sha256 hash of the final index.html along with the version
+
+gulp.task('addendum', () => {
+    return new Promise(function(resolve, reject) {
+        var hash = null
+        var algorithm = 'sha256'
+            , shasum = crypto.createHash(algorithm)
+
+        // Updating shasum with file content
+        var filename = __dirname + "/frontend/dist/index.html"
+            , s = fs.ReadStream(filename)
+        s.on('data', function (data) {
+            shasum.update(data)
+        })
+
+        // making digest
+        s.on('end', function () {
+            hash = shasum.digest('hex')
+            console.log("SHA256 for index.html@" + version + " - " + hash)
+            resolve()
+        })
+    });
+})
+
 gulp.task('copy', gulp.series('compile', function() {
     return gulp.src(filesToCopy, {
         base: './frontend/src/'
@@ -118,4 +158,4 @@ gulp.task('copy', gulp.series('compile', function() {
     .pipe(gulp.dest('frontend/dist'));
 }));
 
-gulp.task('build', gulp.series('copy', 'sri'));
+gulp.task('build', gulp.series('copy', 'version', 'sri', 'addendum'));

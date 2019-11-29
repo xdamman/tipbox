@@ -1,6 +1,6 @@
 {
   "name": "tipbox",
-  "version": "1.0.0",
+  "version": "2.0.0-beta1",
   "description": "Collect anonymous feedback & tips from the communities you want.",
   "main": "index.js",
   "engines": {
@@ -41,6 +41,7 @@
     "gulp-clean-css": "^4.2.0",
     "gulp-less": "^4.0.1",
     "gulp-rename": "^1.2.0",
+    "gulp-replace": "^1.0.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-sri-hash": "^2.2.1",
     "gulp-streamify": "1.0.2",
@@ -69,7 +70,8 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
-    "nightwatch": "^1.2.4"
+    "nightwatch": "^1.2.4",
+    "node-dev": "^4.0.0"
   },
   "collective": {
     "type": "opencollective",
