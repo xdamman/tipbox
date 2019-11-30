@@ -15,7 +15,7 @@ module.exports = function(app) {
     }
 
     // Enforce a strong CSP Policy
-    res.setHeader("Content-Security-Policy","default-src 'none'; script-src 'self'; style-src 'self'; media-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'");
+    res.setHeader("Content-Security-Policy","default-src 'none'; script-src 'self'; style-src 'self'; media-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'");
 
     next();
   });
