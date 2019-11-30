@@ -1,5 +1,7 @@
 node_modules
 
+.env
+
 *.js.map
 frontend/src/css
 data/caddy/*

@@ -1,4 +1,4 @@
-# v2.0.0-beta1
+# v2.0.0-beta3
 
 - Moved entire stack to Docker in order to make it easier to build and run the project
 - Updated all the NPM modules, moved to Yarn to help provide a lockfile for future-proofing future builds.
@@ -9,3 +9,6 @@
     - Users can build with Docker and get the same hash
 - Removed any external scripts, and ability to load anything inline or external to the current domain via CSP
 - Minor bugfixes and website updates
+
+### Hashes:
+    - tipbox.is:
