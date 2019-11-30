@@ -30,7 +30,7 @@ var TipView = function(options) {
   this.showFingerprint = function(fingerprint) {
     $pgp_fingerprint.classList.remove('hidden');
     $pgp_fingerprint.querySelector('span').textContent = '0x' + fingerprint.substr(32) + '';
-    $pgp_fingerprint.querySelector('svg').style.fill = '#' + fingerprint.substr(34);
+    $pgp_fingerprint.querySelector('.padlock_svg').style.fill = '#' + fingerprint.substr(34);
     $pgp_fingerprint.classList.toggle('encrypted');
     $pgp_fingerprint.setAttribute('title','PGP fingerprint:\n'+fingerprint);
   };
