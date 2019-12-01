@@ -4,6 +4,7 @@ node_modules
 
 *.js.map
 frontend/src/css
+frontend/dist
 data/caddy/*
 data/keys/*
 data/*.cnt
