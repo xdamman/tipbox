@@ -1,10 +1,10 @@
 "use strict";
 
-var page = require('./page')();
 var TipboxApi = require('./api');
 var Tip = require('./tip');
 var utils = require('./utils');
-var server_pgp = require('../../../data/keys/public.key.json');
+var serverKey = process.env("SERVER_PUBLIC_KEYFILE") || '../../../data/keys/public.key.json'
+var server_pgp = require(serverKey);
 
 var api = new TipboxApi({pgp: server_pgp});
 
