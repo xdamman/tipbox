@@ -1,4 +1,4 @@
-# v2.0.0-beta3
+# v2.0.0-beta4
 
 - Moved entire stack to Docker in order to make it easier to build and run the project
 - Updated all the NPM modules, moved to Yarn to help provide a lockfile for future-proofing future builds.
@@ -6,9 +6,11 @@
 - Reproducible and verifiable builds
     - Subresource integrety on all style and script assets
     - SHA256 of frontend/dist/index.html listed in VERSION.md for comparison and auditing
-    - Users can build with Docker and get the same hash
+    - Users can build with Docker and get the same hash if they have the server public key
 - Removed any external scripts, and ability to load anything inline or external to the current domain via CSP
+- ESLint everything
 - Minor bugfixes and website updates
 
 ### Hashes:
-    - tipbox.is:
+    - tipbox.is: adba1e871d5a5b48f4058431e7f519da1499299a6cc78ce1d22da2468bcc340d
+

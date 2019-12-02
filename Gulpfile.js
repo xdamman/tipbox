@@ -86,7 +86,7 @@ gulp.task('less', function(done) {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('frontend/src/less/*.less', ['less']);
+    gulp.watch('frontend/src/less/*.less', gulp.series('less'));
     gulp.watch('frontend/src/**/*.js', function(diff) {
         // avoid infinite loop with browserify changing a .js file
         if (diff.path.match(/navigation.js/)) {
@@ -151,7 +151,21 @@ gulp.task('addendum', () => {
     });
 })
 
-gulp.task('copy', gulp.series('compile', function() {
+gulp.task('copyKey', () => {
+    return new Promise(function(resolve, reject) {
+        var serverKeyFile = './data/keys/public.key.json'
+        if (process.env["SERVER_PUBLIC_KEY"]) {
+            serverKeyFile = process.env["SERVER_PUBLIC_KEY"]
+        }
+        fs.copyFile(serverKeyFile, 'frontend/src/js/public.key.json', (err) => {
+            if (err) throw reject(err)
+            console.log('Using ', serverKeyFile, 'as public key.');
+            resolve()
+        });
+    })
+})
+
+gulp.task('copy', gulp.series('copyKey', 'compile', function() {
     return gulp.src(filesToCopy, {
         base: './frontend/src/'
     })

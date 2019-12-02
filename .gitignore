@@ -3,6 +3,8 @@ node_modules
 .env
 
 *.js.map
+*.compiled.js
+
 frontend/src/css
 frontend/dist
 data/caddy/*

@@ -1,203 +1,199 @@
-"use strict";
+'use strict'
 
-var TipboxApi = require('./api');
-var Tip = require('./tip');
-var utils = require('./utils');
-var serverKey = process.env("SERVER_PUBLIC_KEYFILE") || '../../../data/keys/public.key.json'
-var server_pgp = require(serverKey);
+var TipboxApi = require('./api')
+var Tip = require('./tip')
+var utils = require('./utils')
+var serverPublicKey = require('./public.key.json')
 
-var api = new TipboxApi({pgp: server_pgp});
+var api = new TipboxApi({ pgp: serverPublicKey })
 
 //
 // ComposeView Controller
 //
-window.ComposeViewController = (function() {
-  var $sendBtn = document.querySelector('#sendBtn');
+window.ComposeViewController = (function () {
+  var $sendBtn = document.querySelector('#sendBtn')
 
-  var init = function() {
-
+  var init = function () {
     /*
      * Loading the parameters from the URL
      */
     var params = {
-        recipient: utils.getParam('recipient')
-      , subject: utils.getParam('subject', 'No subject')
-      , signature: utils.getParam('signature')
-      , fingerprint: utils.getParam('fingerprint')
+      recipient: utils.getParam('recipient'),
+      subject: utils.getParam('subject', 'No subject'),
+      signature: utils.getParam('signature'),
+      fingerprint: utils.getParam('fingerprint')
     }
 
     /*
      * Prefill the Compose View with these parameters
      */
-    var els = document.querySelectorAll('[data-attr]');
-    for(var i=0;i<els.length;i++) {
-      var el = els[i];
-      var attr = el.dataset.attr;
-      if(el.attributes.title) {
-        el.setAttribute('title', params[attr]);
+    var els = document.querySelectorAll('[data-attr]')
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i]
+      var attr = el.dataset.attr
+      if (el.attributes.title) {
+        el.setAttribute('title', params[attr])
       }
-      if(params[attr]) el.textContent = params[attr];
+      if (params[attr]) el.textContent = params[attr]
     }
 
-    var tip;
+    var tip
     var options = {
-        el: document.querySelector('#tip')
-      , recipient: params.recipient
-      , subject: params.subject
-      , signature: params.signature
-      , api: api
-    };
-
-    if(params.fingerprint && params.fingerprint.length == 40) {
-      api.pgp.get(params.fingerprint, function(err, recipient_pgp) {
-        options.pgp = recipient_pgp;
-        options.fingerprint = params.fingerprint;
-        tip = new Tip(options);
-      });
-    }
-    else {
-      tip = new Tip(options);
+      el: document.querySelector('#tip'),
+      recipient: params.recipient,
+      subject: params.subject,
+      signature: params.signature,
+      api: api
     }
 
-    $sendBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      tip.send();
-      return false;
-    });
+    if (params.fingerprint && params.fingerprint.length === 40) {
+      api.pgp.get(params.fingerprint, function (err, recipientPgp) {
+        if (err) {
+          console.error('Unable to get PGP key from fingerprint', params.fingerprint, err)
+          throw (err)
+        }
+        options.pgp = recipientPgp
+        options.fingerprint = params.fingerprint
+        tip = new Tip(options)
+      })
+    } else {
+      tip = new Tip(options)
+    }
+
+    $sendBtn.addEventListener('click', function (e) {
+      e.preventDefault()
+      tip.send()
+      return false
+    })
   }
 
-  init();
+  init()
 
-  return { init: init };
-})();
+  return { init: init }
+})()
 
 //
 // CreateView Controller
 //
-var CreateViewController = (function() {
-  var createViewElem = document.getElementById('createView');
-  var $recipient = createViewElem.querySelector('#recipient');
-  var $subject = createViewElem.querySelector('#subject');
-  var $createBtn = createViewElem.querySelector('#createBtn');
-  var $errorlog = createViewElem.querySelector('#errorlog');
-  var $tipboxCreated = createViewElem.querySelector('#tipboxCreated');
-  var $encryptionInfo = createViewElem.querySelector('#encryptionInfo');
-  var $selectPGP = createViewElem.querySelector('#selectPGP');
-  var $agreeToS = createViewElem.querySelector('#agreeToS');
+window.CreateViewController = (function () {
+  var createViewElem = document.getElementById('createView')
+  var $recipient = createViewElem.querySelector('#recipient')
+  var $subject = createViewElem.querySelector('#subject')
+  var $createBtn = createViewElem.querySelector('#createBtn')
+  var $errorlog = createViewElem.querySelector('#errorlog')
+  var $tipboxCreated = createViewElem.querySelector('#tipboxCreated')
+  var $encryptionInfo = createViewElem.querySelector('#encryptionInfo')
+  var $selectPGP = createViewElem.querySelector('#selectPGP')
+  var $agreeToS = createViewElem.querySelector('#agreeToS')
 
-  var searchPGP = function() {
-    var recipient = $recipient.value;
-    if(!utils.isEmail(recipient)) return;
+  var searchPGP = function () {
+    var recipient = $recipient.value
+    if (!utils.isEmail(recipient)) return
 
-    var $spinner = document.querySelector('#encryption .spinner');
-    $spinner.classList.remove('hidden');
-    api.pgp.search(recipient, function(err, results) {
-      $spinner.classList.add('hidden');
-      $selectPGP.innerHTML = '';
+    var $spinner = document.querySelector('#encryption .spinner')
+    $spinner.classList.remove('hidden')
+    api.pgp.search(recipient, function (err, results) {
+      $spinner.classList.add('hidden')
+      $selectPGP.innerHTML = ''
 
-      if(err || !results || results.length == 0) {
-        $encryptionInfo.classList.remove('hidden');
-        return;
+      if (err || !results || results.length === 0) {
+        $encryptionInfo.classList.remove('hidden')
+        return
       }
 
-      selectedKey = null;
-      if(results.length > 0) {
-        $encryptionInfo.classList.add('hidden');
-        $selectPGP.appendChild(createSelectableListElement("No encryption", null));
+      selectedKey = null
+      if (results.length > 0) {
+        $encryptionInfo.classList.add('hidden')
+        $selectPGP.appendChild(createSelectableListElement('No encryption', null))
 
-        for(var i=0; i < results.length; i++) {
-          var key = new Key(results[i]);
-          $selectPGP.appendChild(key.toElement());
+        for (var i = 0; i < results.length; i++) {
+          var key = new Key(results[i])
+          $selectPGP.appendChild(key.toElement())
         }
       }
-    });
-  };
-
-  var recipient = utils.getParam('recipient');
-  if(recipient) {
-    $recipient.value = recipient;
-    searchPGP();
-    $subject.focus();
+    })
   }
 
-  var Key = function(key) {
-    this.fingerprint = key.fingerprint;
-    this.source = key.source;
+  var recipient = utils.getParam('recipient')
+  if (recipient) {
+    $recipient.value = recipient
+    searchPGP()
+    $subject.focus()
   }
 
-  Key.prototype.toString = function() {
-    return "0x"+this.fingerprint.substr(32)+" ("+this.source+")";
+  var Key = function (key) {
+    this.fingerprint = key.fingerprint
+    this.source = key.source
   }
 
-  var selectedKey = null;
+  Key.prototype.toString = function () {
+    return '0x' + this.fingerprint.substr(32) + ' (' + this.source + ')'
+  }
 
-  var selectKey = function(el, value) {
-    if(selectedKey)
-      selectedKey.el.classList.toggle('selected');
+  var selectedKey = null
 
-    selectedKey = { el: el, value: value };
-    el.classList.toggle('selected');
-  };
+  var selectKey = function (el, value) {
+    if (selectedKey) { selectedKey.el.classList.toggle('selected') }
 
-  var showError = function(msg) {
-    $errorlog.querySelector('span').textContent = msg;
-    $errorlog.classList.remove('hidden');
-  };
+    selectedKey = { el: el, value: value }
+    el.classList.toggle('selected')
+  }
 
-  var createSelectableListElement = function(label, value) {
-    var li = document.createElement('li');
-    var a = document.createElement('a');
+  var showError = function (msg) {
+    $errorlog.querySelector('span').textContent = msg
+    $errorlog.classList.remove('hidden')
+  }
+
+  var createSelectableListElement = function (label, value) {
+    var li = document.createElement('li')
+    var a = document.createElement('a')
 
     // Select the first encryption key found
-    if(!selectedKey || !selectedKey.value) {
-      selectKey(a, value);
+    if (!selectedKey || !selectedKey.value) {
+      selectKey(a, value)
     }
 
-    a.addEventListener('click', function(e) {
-      e.preventDefault();
-      selectKey(this, value);
-      return false;
-    });
+    a.addEventListener('click', function (e) {
+      e.preventDefault()
+      selectKey(this, value)
+      return false
+    })
 
-    li.className = 'table-view-cell media';
-    a.innerHTML = '<span class="media-object pull-left icon icon-check"></span>'+label;
-    li.appendChild(a);
+    li.className = 'table-view-cell media'
+    a.innerHTML = '<span class="media-object pull-left icon icon-check"></span>' + label
+    li.appendChild(a)
 
-    return li;
-
-  };
-
-  Key.prototype.toElement = function() {
-    return createSelectableListElement(this.toString(),this.fingerprint);
+    return li
   }
 
-  $recipient.addEventListener('blur', searchPGP);
+  Key.prototype.toElement = function () {
+    return createSelectableListElement(this.toString(), this.fingerprint)
+  }
 
-  $createBtn.addEventListener('click', function(e) {
-    e.preventDefault();
+  $recipient.addEventListener('blur', searchPGP)
 
-    var recipient = $recipient.value;
-    var subject = $subject.value;
-    var fingerprint = (selectedKey) ? selectedKey.value : '';
+  $createBtn.addEventListener('click', function (e) {
+    e.preventDefault()
 
-    if(!utils.isEmail(recipient))
-      return showError("Invalid email address");
+    var recipient = $recipient.value
+    var subject = $subject.value
+    var fingerprint = (selectedKey) ? selectedKey.value : ''
 
-    if(!$agreeToS.checked)
-      return showError("You must accept our Terms of Service and Privacy Policy.");
+    if (!utils.isEmail(recipient)) { return showError('Invalid email address') }
 
-    if(!subject)
-      return showError("Subject cannot be empty");
+    if (!$agreeToS.checked) { return showError('You must accept our Terms of Service and Privacy Policy.') }
 
-    api.tipbox.create(recipient, subject, fingerprint, function(err, res) {
-      if(err) {
-        console.error("Error creating the tipbox", err);
-        return;
+    if (!subject) { return showError('Subject cannot be empty') }
+
+    api.tipbox.create(recipient, subject, fingerprint, function (err, res) {
+      if (err) {
+        console.error('Error creating the tipbox', err)
+        return
       }
 
-      $tipboxCreated.classList.toggle('active');
-    });
+      $tipboxCreated.classList.toggle('active')
+    })
 
-    return false;
-  });
-})();
+    return false
+  })
+})()
