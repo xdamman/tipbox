@@ -1,4 +1,4 @@
-# v2.0.0-beta4
+# v2.0.0-beta5
 
 - Moved entire stack to Docker in order to make it easier to build and run the project
 - Updated all the NPM modules, moved to Yarn to help provide a lockfile for future-proofing future builds.
@@ -12,5 +12,5 @@
 - Minor bugfixes and website updates
 
 ### Hashes:
-    - tipbox.is: adba1e871d5a5b48f4058431e7f519da1499299a6cc78ce1d22da2468bcc340d
+    - tipbox.is: b21747edac9acc2fb7daaf414cf0c3dc1b5645fac73fdfa0852d95032942ac96 
 
