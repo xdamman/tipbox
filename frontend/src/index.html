@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <meta charset="utf-8">
     <title>Tipbox</title>
 
@@ -57,7 +58,7 @@
                 <div class="blockG" id="rotateG_08"></div>
               </div>
             </div>
-            <p class="info" id="encryptionInfo">To enable end-to-end PGP encryption, make sure that the public PGP key associated to your email address has been published to a <a href="https://pgp.mit.edu">public key server</a>.</p>
+            <p class="info" id="encryptionInfo">To enable end-to-end PGP encryption, make sure that the public PGP key associated to your email address has been published to a <a href="https://keys.openpgp.org">public key server</a>.</p>
           </div>
 
           <ul id="selectPGP" class="table-view">
@@ -136,8 +137,7 @@
           <li><a href="#security">Security</a></li>
           <li><a href="#tos">Terms of Service</a></li>
           <li><a href="#privacy-notice">Privacy Notice</a></li>
-          <li><a href="#donate">Donate</a></li>
-          <li><a href="#transactions">Transactions</a></li>
+          <li><a href="https://opencollective.com/tipbox">Donate</a></li>
         </ul>
         <ul class="social">
           <li>
@@ -245,7 +245,7 @@
               <b>How secure is this?</b>
               <p>For the tipster, it is as safe as creating a new email address and sending an email with it through a web interface and removing it right after from the “Sent” folder.</p>
               <p>For the journalist, it is as safe as receiving an email. But if have a PGP key associated to your email address, you can opt-in to receive a PGP encrypted email which is definitely safer to keep in your inbox than a non-encrypted email.</p>
-              <p>That said, since Tipbox doesn’t require the tipster to download any piece of software, it relies -like any other webmail service- on the security of the browser which is not full proof. That’s why we advise against using Tipbox for NSA level leaks. For very important leaks, you should better use <a href="https://freedom.press/securedrop">SecureDrop</a> which has been especially engineered for that purpose.</p>
+              <p>That said, since Tipbox doesn’t require the tipster to download any piece of software, it relies -like any other webmail service- on the security of the browser which is not full proof. You need to understand your threat-model/adversary and determine if Tipbox meets you or your orgnizations needs. If you're unsure, you should use <a href="https://freedom.press/securedrop">SecureDrop</a> which has been especially engineered for the best possible security.</p>
               <b>What about the metadata?</b>
               <p>While we don’t keep any logs, there are many intermediaries between the end user and our server. Each of those could keep the logs to identify which IP addresses connected to our server. That’s why we strongly advised against using Tipbox while being connected to the Wifi network of your company. Just use it on your phone with your data plan. For increased anonymity, you could also connect to our server via Tor: <a href="http://tipboxtdf3ydy5xq.onion">tipboxtdf3ydy5xq.onion</a>.</p>
               <p>However, Tipbox has been engineered in such a way that intermediaries can’t identify the recipient, subject or content of the tip. Intermediaries can’t distinguish between visitors who come to create a new Tipbox and those who use it to submit a tip to person A or to person B.</p>
@@ -267,26 +267,34 @@
               <h2>Security</h2>
             </div>
             <div class="description">
-              <p>There is always a tradeoff between ease of use and security (that's why you don't live in a bunker). By not requiring your potential sources to install an app, there is a risk that a hacker could tamper with the files served to them to include a key logger.</p>
-              <p>To do that though, the hacker would have to know before hand who is going to send a tip through Tipbox. They will also have to find a way to get in between that user and our server just before the source loads the Tipbox website. Not easy to pull off especially over HTTPS but not impossible.</p>
-              <p>That’s why you need to think of Tipbox as a U-lock for your bike: perfect for everyday use but not full proof. Given enough dedication, time and appropriate tooling, adversaries could tamper with it if they know before hand who are your sources. Depending on your threat model, this may or may not matter. It’s all about finding the appropriate tool for the job. That’s why we don’t recommend using Tipbox with sources that are already under active surveillance.</p>
-              <p>However, once a tip is sent (and if you use the end-to-end PGP encryption option of Tipbox) it's NSA proof. At best, an investigator could trace back who visited the Tipbox website if they can access the logs of the ISP (Internet Service Provider) or the logs of the network that your source used to connect to the Internet (don't use Tipbox on your company computer/network!). But they couldn't prove if the user sent a tip and to whom, and they certainly can’t find out the content of the tip without your private PGP key.</p>
-              <p>If you need a higher level of security, you should require your source to install an app (such as <a href="https://itunes.apple.com/us/app/signal-private-messenger/id874139669?mt=8">Signal for iPhone</a> or <a href="https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms&hl=en">TextSecure for Android</a>) or use <a href="https://freedom.press/securedrop">SecureDrop</a>.</p>
+                <p>There will always be a risk associated with leaking information to the press. <a href='https://www.washingtonpost.com/blogs/erik-wemple/wp/2017/06/06/did-the-intercept-bungle-nsa-leak/'>Even the most secure methods are not risk free</a>. Tipbox’s goal is to make it easy to get information from individuals who may not be able to install the software required by more secure solutions (eg. Tor and Securedrop). These potential users are likely to face a vastly different threat model, one that doesn’t include nation-states. Think migrant workers leaking information about labor conditions vs the Edward Snowdens of the world. </p>
+                <p>We've made our best effort to build a tool that allows anyone to easily send a tip in a secure and anonymous way with nothing more than a modern browser. Tips sent to recipients with PGP keys feature end-to-end encryption; the server will never know the contents of that tip. We will also never keep logs of who accessed the server or any email that was sent.</p>
+                <p>However, based on your potential sources and adversaries, you must ultimately decide if the security tradeoffs of Tipbox make sense for you or your organization.</p>
+                <p>If you do require a higher degree of security, we would refer you to <a href='https://securedrop.org/'>SecureDrop</a>, or the Signal messaging app, available on <a href='https://apps.apple.com/us/app/signal-private-messenger/id874139669'>iOS</a> or <a href='https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms&hl=en_US'>Android</a>.</p>
             </div>
           </article>
           <article>
             <div class="title">
-              <h2>Technology</h2>
+              <h2>Technical</h2>
             </div>
             <div class="description">
-              <p>This site is using the latest SSL cryptography standard. We don't keep any logs and we don't store any data. The tips are directly sent to the email address of the recipient. If the recipient has a PGP key associated to their email address on a <a href="https://pgp.mit.edu/">public key server</a>, we will use it to encrypt the email end-to-end. If there isn't one, we will still use PGP to encrypt the email from the browser of the user to our email server to avoid <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attacks</a> (<a href="http://thehackernews.com/2013/12/fake-google-ssl-certificates-made-in.html">as the French government did to spy on its own users</a>).</p>
-              <p>The unique and private URL of a tipbox has the following format: https://tipbox.is#email/subject/[fingerprint]/signature</p>
-              <p>Since all the information that identifies a tipbox is in the hash, it is never sent to the server. The frontend client reads it and encrypts it with the PGP key of the server before sending it with the content of the tip. This way, even in the case of a man-in-the-middle attack, the attacker won't be able to tell which Tipbox the user was trying to send a tip to.</p>
-              <b>Potential risks</b>
-              <p>Any intermediary between the end user and this server (such as your ISP) could record the IP addresses that are connecting to this server. To be clear, that would only reveal who accessed this server, not the actual Tipbox, recipient or content of the tip. This could be mitigated by connecting to this site through <a href="https://www.torproject.org/">Tor</a> at <a href="http://tipboxtdf3ydy5xq.onion/">tipboxtdf3ydy5xq.onion</a>.</p>
-              <p>Sophisticated attackers who could monitor the requests coming in and out of our server to do statistical analysis of the traffic based on the size of the requests. To mitigate this, we add padding to the requests sent to our server. That way, whether your tip is short or long or contains an attachment or not, its size won't reflect its real size and observers can't make any assumption on its content. We also add a random delay between the request to our server and sending the tip to the recipient so that observers can't easily synchronize logs.</p>
-              <p>Another potential security risk would be someone hacking into our server and changing the html/javascript code being served to our users. To mitigate this, we invite you to make sure that the html page and javascript file served by this server are the same than what is available on <a href="https://github.com/xdamman/tipbox">our public repo</a>. That way an attacker would have to hack both our server and our Github repo which has 2-factor authentication.</p>
-              <p><strong>For all those reasons, while Tipbox is making a lot of effort to make it very hard for attackers or any government to spy on who is sending you tips, we can't make any guarantee and you should use this service at your own risk. For high risk whistleblowing, you should better use <a href="https://securedrop.org/">SecureDrop</a> or you should require your source to install an app such as <a href="https://itunes.apple.com/us/app/signal-private-messenger/id874139669?mt=8">Signal for iPhone</a> or <a href="https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms&hl=en">TextSecure for Android</a>.</strong></p>
+                <p>This site is using the latest SSL cryptography and certificates from LetsEncrypt. We don't keep any logs and we don't store any user data. The tips are directly sent to the email address of the recipient. If the recipient has included a PGP key when setting up their Tipbox, we will use it to encrypt the email end-to-end. </p>
+                <p>We also have a strict CSP policy, which restricts any Javascript to sources we control, along with specifying each scripts hash to help compare it to the original source code and detect unauthorized changes.</p>
+                <p>In addition to SSL, we also use PGP to encrypt any communication between the browser and the server. This is designed to help mitigate passive man-in-the-middle attacks, such as a user visiting Tipbox on a laptop with a compromised trusted certificate.</p>
+                
+                <p><strong>Ways to stay safe</strong></p>
+                <ul>
+                  <li>Only visit Tipbox on a personal phone or laptop, never a work machine</li>
+                  <li>Use “Incognito” mode on your browser</li>
+                  <li>Visit Tipbox using a public wifi access point of a business you don’t frequent.</li></ul>
+                </ul>
+                
+                <p><strong>Potential risks</strong></p>
+                <p>Any intermediary between the end user and this server (such as your ISP) could record the IP addresses that are connecting to this server. To be clear, that would only reveal who accessed this server, not the actual Tipbox, recipient or content of the tip. </p>
+                <p>Sophisticated attackers who could monitor the requests coming in and out of our server to do statistical analysis of the traffic based on the size of the requests. To mitigate this, we add padding to the requests sent to our server which won't reflect its real size. We also add a random delay between the request to our server and sending the tip to the recipient so that observers can't easily synchronize logs.</p>
+                <p>Another potential security risk would be someone hacking into our server and changing the html/javascript code being served to our users. To mitigate this, we invite you to make sure that the html page and javascript file served by this server are the same than what is available on <u>our public repo</u>.</p>
+                <p>That being said, while Tipbox is taking steps to keep your tips secure and anonymous, no security is perfect, and you should use this service at your own risk.</p>
+                <p>If you do require a higher degree of security, we would refer you to <a href='https://securedrop.org/'>SecureDrop</a>, or the Signal messaging app, available on <a href='https://apps.apple.com/us/app/signal-private-messenger/id874139669'>iOS</a> or <a href='https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms&hl=en_US'>Android</a>.</p>
             </div>
           </article>
         </section>
@@ -362,111 +370,9 @@
           </article>
         </section>
       </main>
-      <!-- Donation form page -->
-      <main id="donate" class="hidden">
-        <div class="budget-container">
-          <div class="budget">
-            <div class="budget__values">
-              <span class="budget__values__initialValue">$0</span>
-              <span id="js-budget-left" class="budget__values__currentValue"></span>
-              <span id="js-budget-total" class="budget__values__maxValue"></span>
-            </div>
-            <div class="budget__progressBar">
-              <div id="js-progress-bar" class="budget__progressBar__progress"></div>
-            </div>
-          </div>
-        </div>
-        <div class="form-container">
-          <form id="donate-form" autocomplete="on">
-            <div class="input-box">
-              <label for="name">Name</label>
-              <input type="text" name="name" id="name" class="input-control" placeholder="Name">
-              <span class="hint">How should we credit you on our supporters page?. Pseudonyms are fine.</span>
-            </div>
-            <div class="input-box">
-              <label for="url">URL</label>
-              <input type="text" name="url" id="url" class="input-control" placeholder="URL">
-              <span class="hint">Where should we link your name to? Your profile page on Twitter/Facebook/Instagram or LinkedIn is fine.</span>
-            </div>
-            <div class="input-box">
-              <label for="email">Email</label>
-              <input type="text" name="email" id="email" class="input-control" placeholder="Email">
-            </div>
-            <div class="input-box">
-              <label for="cardNumber">Card Number</label>
-              <input type="tel" id="cardNumber" class="input-control" data-stripe="number" placeholder="Card Number">
-            </div>
-            <div class="input-box expiration-date">
-              <label for="">Expiration Date (MM/YYYY)</label>
-              <input type="number" id="expirationDate[mm]" class="input-control month" data-stripe="exp_month" placeholder="MM">
-              <input type="number" id="expirationDate[yyyy]" class="input-control year" data-stripe="exp_year" placeholder="YYYY">
-            </div>
-            <div class="input-box cvc">
-              <label for="">CVC</label>
-              <input type="number" id="cvc" class="input-control cvc" data-stripe="cvc" autocomplete="off" placeholder="CVC">
-            </div>
-            <div class="input-box amount">
-              <div class="inner">
-                <label for="amount">USD</label>
-                <input type="number" name="amount" id="amount" class="input-control" value="20" placeholder="Amount">
-                <div class="submit">
-                  <input type="submit" value="" class="input-submit">
-                  <i id="js-loader" class="loading hidden"></i>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div id="js-donation-confirmation" class="donation-confirmation hidden">
-          <div class="circle">
-            <p>
-              Thanks for your donation!<br>
-              The Tipbox Team.
-            </p>
-          </div>
-          <div id="js-close-confirmation" class="back-button"></div>
-        </div>
-        <div id="js-donation-error" class="donation-error hidden">
-          <div class="circle">
-            <p>
-              There was an error submitting your donation. <br>
-              Please try again.
-            </p>
-          </div>
-          <div id="js-close-confirmation" class="back-button"></div>
-        </div>
-        <div id="js-validation-error" class="donation-error hidden">
-          <div class="circle">
-            <p>
-              Please check errors.
-            </p>
-          </div>
-          <div id="js-close-confirmation" class="back-button"></div>
-        </div>
-      </main>
-      <!-- Transactions page -->
-      <main id="transactions" class="hidden">
-        <div class="budget-container">
-          <div class="budget">
-            <div class="budget__values">
-              <span class="budget__values__initialValue">$0</span>
-              <span id="js-budget-left" class="budget__values__currentValue"></span>
-              <span id="js-budget-total" class="budget__values__maxValue"></span>
-            </div>
-            <div class="budget__progressBar">
-              <div id="js-progress-bar" class="budget__progressBar__progress"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="activities">
-          <h2>Latest Activities</h2>
-          <ul id="js-transaction-list" class="transactionList"></ul>
-        </div>
-      </main>
       <footer class="footer">
         <p class="copyright">
-          <a href="https://github.com/xdamman/tipbox">Open Source Project</a> made with &#9829; by <a href="https://twitter.com/xdamman">@xdamman</a>, <a href="https://twitter.com/mdp">@mdp</a>, <a href="https://twitter.com/tgouverneur">@tgouverneur</a>, <a href="https://twitter.com/montogeek">@montogeek</a>, <a href="https://twitter.com/evilrabbit_">@evilrabbit_</a> <br> with the financial support of the <a href="http://www.knightfoundation.org/">Knight Foundation</a>. Hosted in Iceland by <a href="https://www.orangewebsite.com/">Orange Website</a>, free speech hosting provider.
+          <a href="https://github.com/xdamman/tipbox">Open Source Project</a> made with &#9829; by <a href="https://twitter.com/xdamman">@xdamman</a>, <a href="https://twitter.com/mdp">@mdp</a>, <a href="https://twitter.com/tgouverneur">@tgouverneur</a>, <a href="https://twitter.com/montogeek">@montogeek</a>, <a href="https://twitter.com/evilrabbit_">@evilrabbit_</a> <br> with the financial support of the <a href="http://www.knightfoundation.org/">Knight Foundation</a>. Version <a href='https://github.com/xdamman/tipbox/tree/v$VERSION$'>$VERSION$</a>
         </p>
         <ul class="social">
           <li>
@@ -490,18 +396,7 @@
     <div class="content">
       <div class="inner">
         <div class="content-padded">
-          <p>This site is using the latest SSL cryptography standard. <strong>We don't keep any logs and we don't store any email address or any tips</strong>. The tips are directly sent to the email address of the recipient. If the recipient has a PGP key associated to their email address on a <a href="https://pgp.mit.edu">public key server</a>, we will use it to encrypt the email end-to-end. If there isn't one, we will still use PGP to encrypt the email from the browser of the user to our email server to avoid <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attacks</a> (<a href="https://thehackernews.com/2013/12/fake-google-ssl-certificates-made-in.html">as the French goverment did to spy on its own users</a>).</p>
-          <p>The unique and private URL of a tipbox has the following format: <code>https://tipbox.is#email/subject/[fingerprint]/signature</code>
-          Since all the information that identifies a tipbox is in the hash, it is never sent to the server. The frontend client reads it and encrypts it with the PGP key of the server before sending it with the content of the tip. This way, even in case of a man-in-the-middle attack, the attacker won't be able to tell which tipbox the user was trying to send a tip to.</p>
-          <h4>Potential risks</h4>
-          <p>There is always a tradeoff between ease of use and security (that's why you don't live in a bunker). By not requiring your potential sources to install an app, there is a risk that a hacker could tamper with the files served to them to include a key logger.</p>
-          <p>To do that though, the hacker would have to know before hand who is going to send a tip through Tipbox. They will also have to find a way to get in between that user and our server just before the source loads the Tipbox website. Not easy to pull off especially over HTTPS but not impossible.</p>
-          <p>That’s why you need to think of Tipbox as a U-lock for your bike: perfect for everyday use but not full proof. Given enough dedication, time and appropriate tooling, adversaries could tamper with it if they know before hand who are your sources. Depending on your threat model, this may or may not matter. It’s all about finding the appropriate tool for the job. That’s why we don’t recommend using Tipbox with sources that are already under active surveillance.</p>
-          <p>Any intermediary between the end user and this server (such as your ISP) could record the IP addresses that are connecting to this server. To be clear, that would only reveal who accessed this server, not the actual tipbox, recipient or content of the tip. This could be mitigated by connecting to this site through <a href="https://www.torproject.org/">Tor</a> using this .onion url: <a href="http://tipboxtdf3ydy5xq.onion">tipboxtdf3ydy5xq.onion</a>.</p>
-          <p>Sophisticated attackers who could monitor the requests in and out of our server could make statistical analysis of the traffic based on the size of the requests. To mitigate this, we add fake weight to the requests sent to our server. That way, whether your tip is short or long or contains an attachment or not, its size won't reflect its real size and observers can't make any assumption on its content. We also add a random delay between the request to our server and sending the tip to the recipient so that observers can't synchronize logs.</p>
-          <p>Another potential security risk would be someone hacking into our server and changing the html/javascript code being served to our users. To mitigate this, we invite you to make sure that the html page and javascript file served by this server are the same than what is available on <a href="https://github.com/xdamman/tipbox">our public repo</a>. That way an attacker would have to hack both our server and our Github repo which has 2-factor authentication.</p>
-          <p><strong>For all those reasons, while Tipbox is making a lot of effort to make it very hard for attackers or any government to spy on who is sending you tips, we can't make any guarantee and you should use this service at your own risk. For high risk whistleblowing, you should better use <a href="https://freedom.press/securedrop">SecureDrop</a> which has been especially engineered for that purpose or you should require your source to install an app such as <a href="https://itunes.apple.com/us/app/signal-private-messenger/id874139669?mt=8">Signal for iPhone</a> or <a href="https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms&hl=en">TextSecure for Android</a>.</p>
-.</strong></p>
+          
         </div>
       </div>
     </div>
@@ -531,7 +426,7 @@
             <label>To:</label>
             <span id="recipient" data-attr="recipient">loading...</span>
             <div id="pgp_fingerprint" class="hidden">
-              <svg id="padlock" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><g transform="translate(6,-1036.3622)"><path style="stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" d="M 10 0 C 6.6862915 0 4 2.6862915 4 6 L 4 9 L 3 9 L 3 20 L 17 20 L 17 9 L 16 9 L 16 6 C 16 2.6862915 13.313708 0 10 0 z M 10 2 C 12.209139 2 14 3.7908602 14 6 L 14 9 L 6 9 L 6 6 C 6 3.7908602 7.790861 2 10 2 z " transform="translate(-6,1036.3622)" /></g></svg>
+              <img src="/img/padlock.svg" class='padlock_svg' />
               <span></span>
             </div>
           </div>
@@ -613,20 +508,6 @@
     </div>
   </div>
 
-  <script id="js-donation-item" type="x-tmpl-mustache">
-    <li class="transactionItem">
-      {{ type }}
-      <span class="transactionItem__amount">{{ amount }}</span>
-      <span class="transactionItem__time">{{ createdAt }}</span>
-    </li>
-  </script>
-  <script id="js-spend-item" type="x-tmpl-mustache">
-    <li class="transactionItem">
-      {{ type }}
-      <span class="transactionItem__amount">{{ amount }} {{ title }}</span>
-      <span class="transactionItem__time">{{ createdAt }}</span>
-    </li>
-  </script>
   <script src="js/navigation.compiled.js"></script>
   <script src="js/tipbox.compiled.js" defer></script>
   </body>

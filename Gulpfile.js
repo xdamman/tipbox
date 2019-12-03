@@ -1,20 +1,25 @@
 var gulp = require('gulp'),
+    crypto = require('crypto'),
+    fs = require('fs'),
+    packageJSON = require(__dirname + '/package.json')
     gutil = require('gulp-util'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
     watchify = require('watchify'),
     browserify = require('browserify'),
-    minifyCSS = require('gulp-minify-css'),
-    uncss = require('gulp-uncss'),
+    cleanCSS = require('gulp-clean-css');
     mold = require('mold-source-map'),
-    uglify = require('gulp-uglify'),
     rename = require("gulp-rename"),
     sourcemaps = require('gulp-sourcemaps'),
     less = require('gulp-less'),
+    replace = require('gulp-replace'),
     path = require('path'),
+    sriHash = require('gulp-sri-hash'),
     LessPluginAutoPrefix = require('less-plugin-autoprefix');
 
-var filesToCopy = ['frontend/src/*.html', 'frontend/src/img/**/*', 'frontend/src/videos/**/*', 'frontend/src/fonts/**/*', 'frontend/src/js/*.compiled.js', 'frontend/src/js/*.js.map', 'frontend/src/favicon.ico'];
+var version = packageJSON.version;
+
+var filesToCopy = ['frontend/src/index.html', 'frontend/src/img/**/*', 'frontend/src/videos/**/*', 'frontend/src/fonts/**/*', 'frontend/src/js/*.compiled.js', 'frontend/src/js/*.js.map', 'frontend/src/favicon.ico'];
 
 var TipboxAppBundler = browserify({
     entries: ['./frontend/src/js/tipbox.js'],
@@ -27,7 +32,9 @@ var NavigationBundler = browserify({
 });
 
 var TipboxAppBundle = function() {
-    return TipboxAppBundler.bundle()
+  return TipboxAppBundler
+        .ignore('sodium')
+        .bundle()
         .on('error', gutil.log.bind(gutil, 'Browserify Error'))
         .pipe(source('tipbox.compiled.js'))
         .pipe(buffer())
@@ -35,7 +42,6 @@ var TipboxAppBundle = function() {
         loadMaps: true
     }))
     // Add transformation tasks to the pipeline here.
-    .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('frontend/src/js/'))
     .on('end', function() {
@@ -52,7 +58,6 @@ var NavigationBundle = function() {
         loadMaps: true
     }))
     // Add transformation tasks to the pipeline here.
-    .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('frontend/src/js/'))
     .on('end', function() {
@@ -81,7 +86,7 @@ gulp.task('less', function(done) {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('frontend/src/less/*.less', ['less']);
+    gulp.watch('frontend/src/less/*.less', gulp.series('less'));
     gulp.watch('frontend/src/**/*.js', function(diff) {
         // avoid infinite loop with browserify changing a .js file
         if (diff.path.match(/navigation.js/)) {
@@ -95,24 +100,76 @@ gulp.task('watch', function() {
     });
 });
 
-gulp.task('copy',['compile'], function() {
-    gulp.src(filesToCopy, {
+gulp.task('sri', () => {
+  return gulp.src('frontend/dist/index.html')
+    // do not modify contents of any referenced css- and js-files after this task...
+    .pipe(sriHash())
+    // ... manipulating html files further, is perfectly fine
+    .pipe(gulp.dest('frontend/dist/'));
+});
+
+gulp.task('version', () => {
+  console.log("Updating version to ", version);
+  return gulp.src('frontend/dist/index.html')
+    // do not modify contents of any referenced css- and js-files after this task...
+    .pipe(replace('$VERSION$', version))
+    // ... manipulating html files further, is perfectly fine
+    .pipe(gulp.dest('frontend/dist/'));
+});
+
+gulp.task('minify-css', gulp.series('less', function() {
+    return gulp.src('frontend/src/css/tipbox.css')
+    .pipe(cleanCSS())
+    // .pipe(rename({ extname: '.min.css' }))
+    .pipe(gulp.dest('frontend/dist/css/'));
+}));
+
+gulp.task('default', gulp.series('watch', 'less'));
+gulp.task('compile', gulp.series('browserify-app', 'browserify-nav', 'minify-css'));
+
+// Output the sha256 hash of the final index.html along with the version
+
+gulp.task('addendum', () => {
+    return new Promise(function(resolve, reject) {
+        var hash = null
+        var algorithm = 'sha256'
+            , shasum = crypto.createHash(algorithm)
+
+        // Updating shasum with file content
+        var filename = __dirname + "/frontend/dist/index.html"
+            , s = fs.ReadStream(filename)
+        s.on('data', function (data) {
+            shasum.update(data)
+        })
+
+        // making digest
+        s.on('end', function () {
+            hash = shasum.digest('hex')
+            console.log("SHA256 for index.html@" + version + " - " + hash)
+            resolve()
+        })
+    });
+})
+
+gulp.task('copyKey', () => {
+    return new Promise(function(resolve, reject) {
+        var serverKeyFile = './data/keys/public.key.json'
+        if (process.env["SERVER_PUBLIC_KEY"]) {
+            serverKeyFile = process.env["SERVER_PUBLIC_KEY"]
+        }
+        fs.copyFile(serverKeyFile, 'frontend/src/js/public.key.json', (err) => {
+            if (err) throw reject(err)
+            console.log('Using ', serverKeyFile, 'as public key.');
+            resolve()
+        });
+    })
+})
+
+gulp.task('copy', gulp.series('copyKey', 'compile', function() {
+    return gulp.src(filesToCopy, {
         base: './frontend/src/'
     })
     .pipe(gulp.dest('frontend/dist'));
-});
+}));
 
-gulp.task('minify-css', ['less'], function() {
-    return gulp.src('frontend/src/css/tipbox.css')
-        .pipe(uncss({
-        html: ['./frontend/src/index.html'],
-        ignore: [/\.selected/, /\.active/, /\.encrypted/, /\.slideout-menu/, /\.slideout-open/, /\.slideout-panel/, /\.text-page/, /\.donation-page/, /\.transaction-page/]
-    }))
-    .pipe(minifyCSS())
-    // .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('frontend/dist/css/'));
-});
-
-gulp.task('default', ['watch', 'less']);
-gulp.task('compile', ['minify-css', 'browserify-app', 'browserify-nav']);
-gulp.task('build', ['copy']);
+gulp.task('build', gulp.series('copy', 'version', 'sri', 'addendum'));

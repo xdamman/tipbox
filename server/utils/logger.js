@@ -7,7 +7,7 @@ var logLevels = {
     warn: 1,
     info: 2,
     verbose: 3,
-    debug: 4,
+    debug: 4
   },
   colors: {
     prod: 'green',
@@ -15,28 +15,32 @@ var logLevels = {
     warn: 'yellow',
     info: 'green',
     verbose: 'cyan',
-    debug: 'blue',
+    debug: 'blue'
   }
 }
 
+var sLogger
 
-var sLogger;
-
-function setup() {
+function setup () {
   var env = process.env.NODE_ENV || 'development'
-  var logLevel = require('../config/settings')(env)['logLevel'] || 'debug'
-  sLogger = new winston.Logger({
+  var logLevel = require('../config/settings')(env).logLevel || 'debug'
+  /* eslint-disable new-cap */
+  sLogger = new winston.createLogger({
     levels: logLevels.levels,
-    colors: logLevels.colors,
     level: logLevel,
+    format: winston.format.combine(
+      winston.format.splat(),
+      winston.format.simple()
+    ),
     transports: [
       new (winston.transports.Console)()
     ]
-  });
+  })
+  /* eslint-enable new-cap */
   return sLogger
 }
 
-exports.instance = function() {
+exports.instance = function () {
   if (typeof sLogger !== 'undefined') {
     return sLogger
   }

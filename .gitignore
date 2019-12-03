@@ -1,0 +1,15 @@
+node_modules
+
+.env
+
+*.js.map
+*.compiled.js
+
+frontend/src/css
+frontend/dist
+data/caddy/*
+data/keys/*
+data/*.cnt
+
+!data/caddy/.gitkeep 
+!data/keys/.gitkeep 

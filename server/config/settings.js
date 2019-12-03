@@ -1,50 +1,45 @@
-var fs = require('fs');
-var env = process.env;
-var keysDir = process.KEYS_DIR || __dirname + '/../../keys';
+var fs = require('fs')
+var path = require('path')
+var env = process.env
+var keysDir = process.KEYS_DIR || path.join(__dirname, '/../../data/keys')
+
+var DOMAIN = env.DOMAIN || 'tipbox.dev'
+var ORIGIN = env.ORIGIN || 'https://' + DOMAIN
 
 var defaults = {
-      'env': env.NODE_ENV,
-      'pgpPrivateKey': fs.readFileSync(keysDir + '/private.key', 'utf-8'),
-      'pgpPublicKey': fs.readFileSync(keysDir + '/public.key', 'utf-8'),
-      'pgpKeyPassphrase': env.PGP_PASSPHRASE,
-      'hostDomain': env.HOST_DOMAIN || env.MAILGUN_DOMAIN || 'tipbox.dev',
-      'hmacKey': env.HMAC_KEY || '',
-      'groupId': env.OC_GROUPID,
-      'apiKey': env.OC_API_KEY,
-      'logLevel': 'error'
-};
+  env: env.NODE_ENV,
+  pgpPrivateKey: fs.readFileSync(keysDir + '/private.key', 'utf-8'),
+  pgpPublicKey: fs.readFileSync(keysDir + '/public.key', 'utf-8'),
+  pgpKeyPassphrase: env.PGP_PASSPHRASE,
+  hmacKey: env.HMAC_KEY,
+  domain: DOMAIN,
+  // This is the web host, and inclues a protocol. You may need to
+  // override it if you're using something Tor and therefore no ssl(HTTP)
+  origin: ORIGIN,
+  logLevel: 'error',
+
+  // Mail settings
+  smtpHost: env.SMTP_HOST,
+  smtpPort: env.SMTP_PORT
+}
 
 var settings = {
-    'development': {
-      'mailgunApiKey': env.MAILGUN_API_KEY,
-      'mailgunDomain': env.MAILGUN_DOMAIN || 'tipbox.in',
-      'smtpHost': env.SMTP_HOST,
-      'smtpPort': env.SMTP_PORT,
-      'pgpKeyPassphrase': '1234',
-      'hmacKey': '',
-      'apiUrl': 'https://opencollective.herokuapp.com/',
-      'logLevel': 'debug'
-    }
-  , 'staging': {
-      'env': env.NODE_ENV,
-      'mailgunApiKey': env.MAILGUN_API_KEY,
-      'mailgunDomain': env.MAILGUN_DOMAIN,
-      'logLevel': 'info'
+  development: {
+    logLevel: 'debug'
+  },
+  production: {
+    logLevel: 'error'
   }
-  , 'tipbox.in': {
-      'mailgunApiKey': env.MAILGUN_API_KEY,
-      'mailgunDomain': env.MAILGUN_DOMAIN
-  }
-  , 'tipbox.is': {
-      'smtpHost': env.SMTP_HOST,
-      'smtpPort': env.SMTP_PORT,
-      'apiUrl': 'https://opencollective-prod.herokuapp.com/'
-  }
-};
+}
 
-module.exports = function(name) {
-  var props = {};
-  for (var key in defaults) { props[key] = defaults[key]; }
-  for (var key in settings[name]) { props[key] = settings[name][key]; }
-  return props;
+module.exports = function (name) {
+  var props = {}
+  for (var defaultKey in defaults) { props[defaultKey] = defaults[defaultKey] }
+  for (var key in settings[name]) { props[key] = settings[name][key] }
+
+  if (env.NODE_ENV === 'development') {
+    console.log('Settings:', props)
+  }
+
+  return props
 }

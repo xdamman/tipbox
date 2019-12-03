@@ -1,0 +1,19 @@
+version: '3'
+services:
+  smtp:
+    image: namshi/smtp
+    env_file:
+      - .env.dev
+
+  server:
+    build: .
+    env_file:
+      - .env.dev
+    depends_on:
+      - smtp
+    volumes:
+      - ".:/app"
+    ports:
+      - "3000:3000"
+    command: yarn run dev
+

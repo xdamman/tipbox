@@ -18,7 +18,6 @@ module.exports = function(app) {
       pgp: require('./controllers/pgp')(app),
       tip: require('./controllers/tip')(app),
       stats: require('./controllers/stats')(app),
-      donate: require('./controllers/donate')(app)
   };
 
   app.jobs = new JobsQueue();

@@ -4,6 +4,7 @@ var app = express();
 var logger = require('./utils/logger').instance()
 
 app.set('env', process.env.NODE_ENV || "development");
+logger.info('env: ' + app.get('env'));
 
 require('./boot')(app);
 
